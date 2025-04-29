@@ -39,16 +39,15 @@
 </head>
 <body>
   <div class="grid-container">
-    <!-- Text in Felder 1, 2, 3 (erste Zeile) -->
-    <div class="grid-item text-block" style="grid-column: 1 / span 3; grid-row: 1;">
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.
-    </div>
 
-    <!-- Text in Felder 9, 10, 11 (zweite Zeile) -->
-    <div class="grid-item text-block" style="grid-column: 2 / span 2; grid-row: 2;">
-      At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.
-    </div>
-
+    <div class="grid-item text-block" style="grid-column: 1 / span 4; grid-row: 1;">
+        Ich überschreibe 4 Spalten inklusive 3 Gutter-Abstände.
+      </div>
+      
+    <div class="grid-item text-block" style="grid-column: 2 / span 3; grid-row: 2 / span 2;">
+        Ich belege zwei Zeilen – und überlappe den horizontalen Gutter dazwischen.
+      </div>
+      
     <!-- Weitere leere Felder -->
     <script>
       const usedCells = [[1,1,3],[2,1,3]]; // grid-row, grid-column start, span

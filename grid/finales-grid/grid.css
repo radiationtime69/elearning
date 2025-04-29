@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 16px;
+    margin: 40px;
+    height: calc(100vh - 80px);
+  }
+  
+  .grid-item {
+    background-color: #e0e0e0;
+    border: 1px dashed #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .text-block {
+    background-color: #d0ebff;
+    border: 1px solid #339af0;
+  }
+  

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grid-Webseite</title>
+  <link rel="stylesheet" href="grid.css" />
+</head>
+<body>
+  <div class="grid-container">
+    <!-- Manuell belegte Zellen -->
+    <div class="grid-item text-block" style="grid-column: 1 / span 4; grid-row: 1;">
+      Ich überschreibe 4 Spalten inklusive 3 Gutter-Abstände.
+    </div>
+
+    <div class="grid-item text-block" style="grid-column: 2 / span 3; grid-row: 2 / span 2;">
+      Ich belege zwei Zeilen – und überlappe den horizontalen Gutter dazwischen.
+    </div>
+  </div>
+
+  <script src="grid.js"></script>
+</body>
+</html>
