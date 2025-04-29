@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grid-Webseite</title>
+  <title>Grid mit Gutter und Margin</title>
   <link rel="stylesheet" href="grid.css" />
 </head>
 <body>
-  <div class="grid-container">
-    <!-- Manuell belegte Zellen -->
-    <div class="grid-item text-block" style="grid-column: 1 / span 4; grid-row: 1;">
-      Ich überschreibe 4 Spalten inklusive 3 Gutter-Abstände.
-    </div>
-
-    <div class="grid-item text-block" style="grid-column: 2 / span 3; grid-row: 2 / span 2;">
-      Ich belege zwei Zeilen – und überlappe den horizontalen Gutter dazwischen.
+  <div class="outer-wrapper">
+    <div class="grid-container">
+      <div class="grid-item text-block" style="grid-column: 1 / span 4; grid-row: 1 / span 3;">
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam 
+        nonumy eirmod tempor invidunt ut laboreLorem ipsum dolor sit amet, 
+        consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt 
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero 
+        eos et accusam et justo duo dolores et ea rebum. Stet clita kasd 
+        gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam 
+        nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam 
+        erat, sed diam voluptua. At vero eos et accusam et justo duo dolores 
+        et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est 
+        Lorem ipsum dolor sit amet.
+      </div>
     </div>
   </div>
-
   <script src="grid.js"></script>
 </body>
 </html>
