@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modulübersicht mit neuen Buttons</title>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #f0f0f0;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      gap: 30px; /* Abstand zwischen den Modulen */
+      padding: 40px;
+      overflow-x: auto;
+      position: relative;
+      width: 100%;
+      max-width: 100vw;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .container::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Der Nav-Button-Style für die Module */
+    .nav-button {
+      width: 96px;
+      height: 96px;
+      background-color: #FBF6ED;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: width 0.3s ease, height 0.3s ease;
+      border: 2px solid #282A2B;
+      border-width: 2px 2px 8px 8px;
+    }
+
+    .nav-button-div {
+      display: flex;
+      width: 100%;
+    }
+
+    .nav-button .material-symbols-outlined {
+      font-size: 64px;
+      margin: 16px;
+      background-color: orange;
+    }
+
+    .nav-button-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      margin-top: 16px;
+      height: 64px;
+    }
+
+    .nav-button.expanded .nav-button-header {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-button-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .nav-button-subheadline {
+      font-size: 32px;
+      color: orange;
+      margin-top: -16px;
+    }
+
+    .nav-button-description {
+      font-size: 16px;
+      margin: 0 8px 16px 96px;
+      color: #555;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .nav-button.expanded {
+      width: 300px;
+    }
+
+    .nav-button.height-expanded {
+      height: 188px;
+    }
+
+    .nav-button.height-expanded .nav-button-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .permanent-marker-regular {
+      font-family: "Permanent Marker", cursive;
+    }
+
+    /* Extra-Buttons und Anzeige */
+    .extra-buttons {
+      visibility: hidden;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease, opacity 0.4s ease 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .extra-buttons.visible {
+      visibility: visible;
+      max-height: 200px;
+      opacity: 1;
+    }
+
+    .extra-button {
+      width: 300px;
+      height: 48px;
+      background-color: #FBF6ED;
+      border: 2px solid #282A2B;
+      border-width: 2px 2px 8px 8px;
+      border-radius: 4px;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .extra-buttons.visible .extra-button:nth-child(1) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.1s;
+      background-color: orange;
+      margin-top: 16px;
+    }
+
+    .extra-buttons.visible .extra-button:nth-child(2) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.4s;
+    }
+
+    .content-boxes-container {
+      display: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+      width: 100%;
+      gap: 16px;
+    }
+
+    .content-boxes-container.visible {
+      display: flex;
+      flex-direction: column-reverse;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease;
+    }
+
+    .content-box {
+      width: 100%;
+      height: 48px;
+      background-color: #FBF6ED;
+      border: 2px solid #282A2B;
+      border-width: 2px 2px 8px 8px;
+      border-radius: 4px;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .content-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="container" id="moduleContainer">
+    <!-- Die Module als nav-button-Div's -->
+    <div class="nav-button" data-index="0">
+      <div class="nav-button-div">
+        <span class="material-symbols-outlined">looks</span>
+        <div class="nav-button-header">
+          <div class="nav-button-text permanent-marker-regular">Modul 1</div>
+          <div class="nav-button-subheadline permanent-marker-regular">Beispiel</div>
+        </div>
+      </div>
+      <div class="nav-button-description">
+        Beschreibung des Moduls 1
+      </div>
+    </div>
+    <div class="nav-button" data-index="1">
+      <div class="nav-button-div">
+        <span class="material-symbols-outlined">looks</span>
+        <div class="nav-button-header">
+          <div class="nav-button-text permanent-marker-regular">Modul 2</div>
+          <div class="nav-button-subheadline permanent-marker-regular">Beispiel</div>
+        </div>
+      </div>
+      <div class="nav-button-description">
+        Beschreibung des Moduls 2
+      </div>
+    </div>
+    <!-- Weitere Module hier hinzufügen... -->
+  </div>
+
+  <div class="extra-buttons" id="extraButtons">
+    <div class="extra-button permanent-marker-regular">Start</div>
+    <div class="extra-button" id="overviewButton">Übersicht</div>
+  </div>
+
+</div>
+
+<script>
+  const modules = document.querySelectorAll('.nav-button');
+  const container = document.getElementById('moduleContainer');
+  let currentIndex = 0;
+
+  // Setzt das aktive Modul
+  function setActiveModule(index) {
+    currentIndex = index;
+
+    modules.forEach((module, idx) => {
+      module.classList.remove('expanded', 'active');
+      if (idx < index) {
+        module.classList.add('expanded');
+      } else if (idx === index) {
+        module.classList.add('active');
+      }
+    });
+  }
+
+  // Eventlistener für jedes Modul
+  modules.forEach((module, index) => {
+    module.addEventListener('click', () => {
+      if (!module.classList.contains('expanded')) {
+        setActiveModule(index);
+      }
+    });
+  });
+
+</script>
+
+</body>
+</html>
