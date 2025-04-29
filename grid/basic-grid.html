@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8x8 Grid</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      box-sizing: border-box;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 16px;
+      margin: 40px;
+      height: calc(100vh - 80px); /* 100vh minus top & bottom margin */
+    }
+
+    .grid-item {
+      background-color: #e0e0e0;
+      border: 1px dashed #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <!-- 8 x 8 = 64 Zellen -->
+    <!-- Du kannst Inhalte später in diese divs laden -->
+    <!-- Beispiel: <div class="grid-item">Inhalt</div> -->
+    <!-- Jetzt erstmal leer -->
+    <!-- Erzeuge 64 Items -->
+    <script>
+      for (let i = 0; i < 64; i++) {
+        const div = document.createElement('div');
+        div.className = 'grid-item';
+        document.querySelector('.grid-container').appendChild(div);
+      }
+    </script>
+  </div>
+</body>
+</html>
