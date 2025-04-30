@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ausklappbare Sidebar mit Wisch-Geste</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 30px; /* etwas breiter im geschlossenen Zustand */
+      background-color: #444;
+      overflow: hidden;
+      transition: width 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.expanded {
+      width: 200px;
+    }
+
+    .sidebar-content {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: 10px;
+    }
+
+    .sidebar.expanded .sidebar-content {
+      opacity: 1;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+
+    .nav-buttons a {
+      padding: 12px;
+      text-decoration: none;
+      color: white;
+      background-color: #555;
+      margin: 5px 0;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar" class="sidebar" onclick="toggleSidebar(event)">
+    <div class="sidebar-content">
+      <div class="nav-buttons">
+        <a href="seite1.html">Seite 1</a>
+        <a href="seite2.html">Seite 2</a>
+        <a href="seite3.html">Seite 3</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+
+    function toggleSidebar(e) {
+      e.stopPropagation();
+      sidebar.classList.add("expanded");
+    }
+
+    // Klick außerhalb der Sidebar -> einklappen
+    document.addEventListener("click", function (event) {
+      if (!sidebar.contains(event.target)) {
+        sidebar.classList.remove("expanded");
+      }
+    });
+
+    // Wisch-Geste (Touch) erkennen
+    let touchStartX = 0;
+
+    document.addEventListener("touchstart", function(e) {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    document.addEventListener("touchend", function(e) {
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartX;
+
+      // Wenn der Nutzer von ganz links nach rechts wischt (mind. 50px)
+      if (touchStartX < 40 && deltaX > 50) {
+        sidebar.classList.add("expanded");
+      }
+    });
+  </script>
+
+</body>
+</html>
