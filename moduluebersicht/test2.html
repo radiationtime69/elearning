@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Modulübersicht mit neuen Buttons</title>
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <title>Modulübersicht</title>
   <style>
     * {
       margin: 0;
@@ -20,14 +18,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       overflow: hidden;
     }
 
     .container {
       display: flex;
-      align-items: center;
-      gap: 30px; /* Abstand zwischen den Modulen */
+      align-items: flex-start;
+      gap: 310px;
       padding: 40px;
       overflow-x: auto;
       position: relative;
@@ -41,250 +38,223 @@
       display: none;
     }
 
-    /* Der Nav-Button-Style für die Module */
-    .nav-button {
-      width: 96px;
-      height: 96px;
-      background-color: #FBF6ED;
-      border-radius: 4px;
+    .module-wrapper {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
-      transition: width 0.3s ease, height 0.3s ease;
-      border: 2px solid #282A2B;
-      border-width: 2px 2px 8px 8px;
+      align-items: center;
     }
 
-    .nav-button-div {
-      display: flex;
-      width: 100%;
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0; /* SVG hinter den Modulen */
     }
 
-    .nav-button .material-symbols-outlined {
-      font-size: 64px;
-      margin: 16px;
-      background-color: orange;
-    }
-
-    .nav-button-header {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      margin-top: 16px;
+    .module {
+      z-index: 2;
+      flex-shrink: 0;
+      width: 64px;
       height: 64px;
-    }
-
-    .nav-button.expanded .nav-button-header {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .nav-button-text {
-      font-size: 20px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .nav-button-subheadline {
-      font-size: 32px;
-      color: orange;
-      margin-top: -16px;
-    }
-
-    .nav-button-description {
-      font-size: 16px;
-      margin: 0 8px 16px 96px;
-      color: #555;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .nav-button.expanded {
-      width: 300px;
-    }
-
-    .nav-button.height-expanded {
-      height: 188px;
-    }
-
-    .nav-button.height-expanded .nav-button-description {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .permanent-marker-regular {
-      font-family: "Permanent Marker", cursive;
-    }
-
-    /* Extra-Buttons und Anzeige */
-    .extra-buttons {
-      visibility: hidden;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      transition: max-height 0.6s ease, opacity 0.4s ease 0.2s;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .extra-buttons.visible {
-      visibility: visible;
-      max-height: 200px;
-      opacity: 1;
-    }
-
-    .extra-button {
-      width: 300px;
-      height: 48px;
-      background-color: #FBF6ED;
-      border: 2px solid #282A2B;
-      border-width: 2px 2px 8px 8px;
-      border-radius: 4px;
-      font-size: 24px;
+      background-color: #d3d3d3;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .module.completed {
+      background-color: #007bff;
+    }
+
+    .module.active {
+      background-color: #ff6f00;
+    }
+
+    .module.expanded {
+      width: 240px;
+      height: 128px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .buttons {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .buttons.visible {
+      display: flex;
+    }
+
+    .buttons button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
 
-    .extra-buttons.visible .extra-button:nth-child(1) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.1s;
-      background-color: orange;
-      margin-top: 16px;
+    .buttons button:first-child {
+      background-color: #28a745;
+      color: white;
     }
 
-    .extra-buttons.visible .extra-button:nth-child(2) {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.4s;
+    .buttons button:last-child {
+      background-color: #6c757d;
+      color: white;
     }
 
-    .content-boxes-container {
-      display: none;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0s linear 0.5s;
-      width: 100%;
-      gap: 16px;
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .content-boxes-container.visible {
-      display: flex;
-      flex-direction: column-reverse;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.5s ease;
-    }
-
-    .content-box {
-      width: 100%;
-      height: 48px;
-      background-color: #FBF6ED;
-      border: 2px solid #282A2B;
-      border-width: 2px 2px 8px 8px;
-      border-radius: 4px;
-      font-size: 24px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .content-box.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .nav {
-      display: flex;
-      align-items: flex-end;
-      gap: 16px;
+    path {
+      fill: none;
+      stroke-linejoin: round;
+      stroke-linecap: round;
     }
   </style>
 </head>
 <body>
-
-<div class="nav">
   <div class="container" id="moduleContainer">
-    <!-- Die Module als nav-button-Div's -->
-    <div class="nav-button" data-index="0">
-      <div class="nav-button-div">
-        <span class="material-symbols-outlined">looks</span>
-        <div class="nav-button-header">
-          <div class="nav-button-text permanent-marker-regular">Modul 1</div>
-          <div class="nav-button-subheadline permanent-marker-regular">Beispiel</div>
-        </div>
-      </div>
-      <div class="nav-button-description">
-        Beschreibung des Moduls 1
-      </div>
-    </div>
-    <div class="nav-button" data-index="1">
-      <div class="nav-button-div">
-        <span class="material-symbols-outlined">looks</span>
-        <div class="nav-button-header">
-          <div class="nav-button-text permanent-marker-regular">Modul 2</div>
-          <div class="nav-button-subheadline permanent-marker-regular">Beispiel</div>
-        </div>
-      </div>
-      <div class="nav-button-description">
-        Beschreibung des Moduls 2
-      </div>
-    </div>
-    <!-- Weitere Module hier hinzufügen... -->
+    <!-- Module + Button-Wrappers -->
+    <!-- 12 Module -->
+    <div class="module-wrapper"><div class="module" data-index="0">1</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="1">2</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="2">3</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="3">4</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="4">5</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="5">6</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="6">7</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="7">8</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="8">9</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="9">10</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="10">11</div><div class="buttons"></div></div>
+    <div class="module-wrapper"><div class="module" data-index="11">12</div><div class="buttons"></div></div>
+
+    <svg id="connectionLine" width="10000" height="1000">
+      <path id="pathLine" stroke="black" stroke-width="4"/>
+    </svg>
   </div>
 
-  <div class="extra-buttons" id="extraButtons">
-    <div class="extra-button permanent-marker-regular">Start</div>
-    <div class="extra-button" id="overviewButton">Übersicht</div>
-  </div>
+  <script>
+    const moduleWrappers = document.querySelectorAll('.module-wrapper');
+    const pathLine = document.getElementById('pathLine');
+    const container = document.getElementById('moduleContainer');
+    let currentIndex = 0;
 
-</div>
+    function setActiveModule(index, smoothScroll = true) {
+      currentIndex = index;
 
-<script>
-  const modules = document.querySelectorAll('.nav-button');
-  const container = document.getElementById('moduleContainer');
-  let currentIndex = 0;
+      moduleWrappers.forEach((wrapper, idx) => {
+        const module = wrapper.querySelector('.module');
+        const buttons = wrapper.querySelector('.buttons');
 
-  // Setzt das aktive Modul
-  function setActiveModule(index) {
-    currentIndex = index;
+        module.classList.remove('completed', 'active', 'expanded');
+        buttons.classList.remove('visible');
+        module.textContent = module.dataset.index * 1 + 1;
 
-    modules.forEach((module, idx) => {
-      module.classList.remove('expanded', 'active');
-      if (idx < index) {
-        module.classList.add('expanded');
-      } else if (idx === index) {
-        module.classList.add('active');
+        if (idx < index) {
+          module.classList.add('completed');
+        } else if (idx === index) {
+          module.classList.add('active', 'expanded');
+          module.textContent = "Lorem ipsum dolor sit amet.";
+
+          buttons.innerHTML = '';
+
+          const startBtn = document.createElement('button');
+          startBtn.textContent = 'Starten';
+          startBtn.onclick = () => {
+            module.classList.remove('active');
+            module.classList.add('completed');
+            goToNextModule(idx);
+          };
+
+          const overviewBtn = document.createElement('button');
+          overviewBtn.textContent = 'Übersicht';
+
+          buttons.appendChild(startBtn);
+          buttons.appendChild(overviewBtn);
+          buttons.classList.add('visible');
+
+          module.scrollIntoView({
+            behavior: smoothScroll ? "smooth" : "auto",
+            block: "center",
+            inline: "center"
+          });
+        }
+      });
+
+      drawPath();
+    }
+
+    function goToNextModule(index) {
+      if (index < moduleWrappers.length - 1) {
+        setActiveModule(index + 1);
       }
-    });
-  }
+    }
 
-  // Eventlistener für jedes Modul
-  modules.forEach((module, index) => {
-    module.addEventListener('click', () => {
-      if (!module.classList.contains('expanded')) {
-        setActiveModule(index);
+    function drawPath() {
+      const containerRect = container.getBoundingClientRect();
+      const points = [];
+
+      moduleWrappers.forEach(wrapper => {
+        const module = wrapper.querySelector('.module');
+        const rect = module.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2 + container.scrollLeft;
+        const centerY = rect.top + rect.height / 2 + container.scrollTop;
+        points.push([centerX, centerY]);
+      });
+
+      const pathData = points.map((p, i) => i === 0 ? `M ${p[0]} ${p[1]}` : `L ${p[0]} ${p[1]}`).join(' ');
+      pathLine.setAttribute('d', pathData);
+      pathLine.setAttribute('stroke', 'black');
+
+      // Entferne alte blaue Linie
+      const oldBlue = document.getElementById('blueLine');
+      if (oldBlue) oldBlue.remove();
+
+      // Erstelle neue blaue Linie für abgeschlossene Module
+      if (currentIndex > 0) {
+        const bluePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const blueData = points.slice(0, currentIndex + 1)
+          .map((p, i) => i === 0 ? `M ${p[0]} ${p[1]}` : `L ${p[0]} ${p[1]}`)
+          .join(' ');
+        bluePath.setAttribute('d', blueData);
+        bluePath.setAttribute('stroke', '#007bff');
+        bluePath.setAttribute('stroke-width', '8');
+        bluePath.setAttribute('fill', 'none');
+        bluePath.setAttribute('id', 'blueLine');
+        pathLine.parentNode.appendChild(bluePath);
       }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setActiveModule(currentIndex, false);
     });
-  });
 
-</script>
-
+    container.addEventListener('scroll', drawPath);
+    window.addEventListener('resize', drawPath);
+  </script>
 </body>
 </html>
