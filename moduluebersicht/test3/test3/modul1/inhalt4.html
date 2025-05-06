@@ -1,19 +1,172 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Modul 1 – Lektion 4</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Übung Modul 1</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 16px;
+      margin: 40px;
+      height: calc(100vh - 80px);
+    }
+
+    .grid-item {
+      background-color: #e0e0e0;
+      border: 1px dashed #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      min-height: 60px;
+    }
+
+    .dropzone {
+      background-color: #ffffff;
+      border: 2px dashed #007bff;
+    }
+
+    .baustein {
+      background-color: #ffd54f;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 20px auto 0;
+      display: block;
+    }
+
+    #checkBtn {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    #nextBtn {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      color: red;
+    }
+  </style>
 </head>
 <body>
-  <h1>Modul 1 – Lektion 4</h1>
-  <p>Hier steht der Text zur Lektion oder Übung.</p>
-  <button onclick="goNext()">Weiter</button>
 
-  <script>
-    function goNext() {
-      // Einfach zur nächsten Seite weiterleiten
-      window.location.href = "inhalt5.html";
+<div class="grid-container">
+  <!-- Lücken oben -->
+  <div class="grid-item dropzone" data-correct="1" style="grid-column: 2 / span 2; grid-row: 1;"></div>
+  <div class="grid-item dropzone" data-correct="2" style="grid-column: 4 / span 2; grid-row: 1;"></div>
+  <div class="grid-item dropzone" data-correct="3" style="grid-column: 6 / span 2; grid-row: 1;"></div>
+
+  <!-- Bausteine unten -->
+  <div class="grid-item" style="grid-column: 2 / span 2; grid-row: 3;">
+    <div class="baustein" draggable="true" data-id="1">Baustein 1</div>
+  </div>
+  <div class="grid-item" style="grid-column: 4 / span 2; grid-row: 3;">
+    <div class="baustein" draggable="true" data-id="2">Baustein 2</div>
+  </div>
+  <div class="grid-item" style="grid-column: 6 / span 2; grid-row: 3;">
+    <div class="baustein" draggable="true" data-id="3">Baustein 3</div>
+  </div>
+</div>
+
+<div class="message" id="feedbackMsg"></div>
+<button id="checkBtn" class="hidden">Überprüfen</button>
+<button id="nextBtn" class="hidden">Weiter</button>
+
+<script>
+  const dropzones = document.querySelectorAll('.dropzone');
+  const bausteine = document.querySelectorAll('.baustein');
+  const checkBtn = document.getElementById('checkBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const feedbackMsg = document.getElementById('feedbackMsg');
+
+  let draggedItem = null;
+
+  // Drag/Drop
+  bausteine.forEach(item => {
+    item.addEventListener('dragstart', () => {
+      draggedItem = item;
+    });
+  });
+
+  dropzones.forEach(zone => {
+    zone.addEventListener('dragover', e => e.preventDefault());
+    zone.addEventListener('drop', e => {
+      if (zone.firstChild) return;
+      zone.appendChild(draggedItem);
+      checkIfAllFilled();
+    });
+  });
+
+  function checkIfAllFilled() {
+    const filled = Array.from(dropzones).every(zone => zone.children.length > 0);
+    checkBtn.classList.toggle('hidden', !filled);
+  }
+
+  // Überprüfen der Lösung
+  checkBtn.addEventListener('click', () => {
+    let correct = true;
+
+    dropzones.forEach(zone => {
+      const correctId = zone.dataset.correct;
+      const droppedId = zone.firstChild?.dataset.id;
+      if (correctId !== droppedId) {
+        correct = false;
+      }
+    });
+
+    // Fortschritt speichern
+    let total = parseInt(localStorage.getItem('gesamt_modul1') || '0');
+    let right = parseInt(localStorage.getItem('richtig_modul1') || '0');
+
+    localStorage.setItem('gesamt_modul1', total + 1);
+    if (correct) {
+      localStorage.setItem('richtig_modul1', right + 1);
+      feedbackMsg.textContent = "Richtige Zuordnung!";
+      feedbackMsg.style.color = "green";
+    } else {
+      feedbackMsg.textContent = "Nicht korrekt – du kannst trotzdem weiter machen.";
+      feedbackMsg.style.color = "orange";
     }
-  </script>
+
+    checkBtn.classList.add('hidden');
+    nextBtn.classList.remove('hidden');
+  });
+
+  // Weiter zur Auswertung
+  nextBtn.addEventListener('click', () => {
+    window.location.href = 'inhalt5.html';
+  });
+</script>
+
 </body>
 </html>

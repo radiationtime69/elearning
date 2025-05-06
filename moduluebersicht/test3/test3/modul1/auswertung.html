@@ -1,22 +1,86 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Auswertung</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auswertung Modul 1</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .percentage {
+      font-size: 32px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .success {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .repeat {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <h1>Auswertung</h1>
-  <p>Du hast dieses Modul abgeschlossen!</p>
-  <button onclick="abschliessen()">Abschließen und zurück</button>
+
+  <h1>Auswertung Modul 1</h1>
+  <div class="percentage" id="percentageText"></div>
+
+  <button id="nextBtn" class="success hidden">Zur Modulübersicht</button>
+  <button id="repeatBtn" class="repeat hidden">Modul wiederholen</button>
 
   <script>
-    function abschliessen() {
-      let fortschritt = parseInt(localStorage.getItem('fortschritt') || '0');
-      if (fortschritt < 12) {
-        localStorage.setItem('fortschritt', fortschritt + 1); // Fortschritt erhöhen
-      }
-      window.location.href = '../test3.html'; // zurück zur Übersicht
+    const right = parseInt(localStorage.getItem('richtig_modul1') || '0');
+    const total = parseInt(localStorage.getItem('gesamt_modul1') || '0');
+    const percent = total > 0 ? Math.round((right / total) * 100) : 0;
+
+    document.getElementById('percentageText').textContent = `Du hast ${percent}% der Aufgaben richtig gelöst.`;
+
+    if (percent >= 70) {
+      document.getElementById('nextBtn').classList.remove('hidden');
+    } else {
+      document.getElementById('repeatBtn').classList.remove('hidden');
     }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      // Speicher optional leeren:
+      localStorage.removeItem('richtig_modul1');
+      localStorage.removeItem('gesamt_modul1');
+      window.location.href = '../test3.html'; // Zielseite bei Erfolg
+    });
+
+    document.getElementById('repeatBtn').addEventListener('click', () => {
+      // Speicher zurücksetzen
+      localStorage.removeItem('richtig_modul1');
+      localStorage.removeItem('gesamt_modul1');
+      window.location.href = 'inhalt1.html'; // Startseite des Moduls erneut
+    });
   </script>
+
 </body>
 </html>
