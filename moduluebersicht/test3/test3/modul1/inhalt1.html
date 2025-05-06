@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lektionsübersicht – Mehrseitig</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .scroll-wrapper {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    .scroll-page {
+      min-width: 100vw;
+      height: 100vh;
+      scroll-snap-align: center;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 16px;
+      height: calc(100vh - 100px);
+    }
+
+    .grid-item {
+      background-color: #e0e0e0;
+      border: 1px dashed #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .text-block {
+      background-color: #d0ebff;
+      border: 1px solid #339af0;
+    }
+
+    .pagination {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 6px;
+      background-color: #333;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-wrapper" id="scrollWrapper">
+
+  <!-- Seite 1 -->
+  <div class="scroll-page">
+    <div class="grid-container">
+      <div class="grid-item text-block" style="grid-column: 1 / span 4; grid-row: 2;">
+        II Secondary Action - Lektionsübersicht
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 4 / span 2; grid-row: 3;">
+        Textblock auf Seite 1
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 6/ span 2; grid-row: 4;">
+        Weiterer Inhalt auf Seite 1
+      </div>
+    </div>
+  </div>
+
+  <!-- Seite 2 -->
+  <div class="scroll-page">
+    <div class="grid-container">
+      <div class="grid-item text-block" style="grid-column: 2 / span 5; grid-row: 2;">
+        🎬 Seite 2 – Animationsprinzip
+      </div>
+      <div class="grid-item text-block" style="grid-column: 3 / span 4; grid-row: 4;">
+        Auf dieser Seite erklären wir Prinzipien mit Grafiken und Beispielen.
+      </div>
+    </div>
+  </div>
+
+  <!-- Seite 3 -->
+  <div class="scroll-page">
+    <div class="grid-container">
+      <div class="grid-item text-block" style="grid-column: 2 / span 4; grid-row: 3;">
+        📚 Seite 3 – Zusammenfassung
+      </div>
+      <div class="grid-item text-block" style="grid-column: 5 / span 3; grid-row: 5;">
+        Wiederholung der zentralen Inhalte.
+      </div>
+      <div class="grid-item text-block" style="grid-column: 6 / span 2; grid-row: 6;">
+        <button onclick="goNext()">Weiter</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Seitenindikatoren -->
+<div class="pagination" id="pagination"></div>
+
+<script>
+  
+  function goNext() {
+  // Einfach zur nächsten Seite weiterleiten
+  window.location.href = "inhalt2.html";
+}
+
+  const scrollWrapper = document.getElementById('scrollWrapper');
+  const pages = document.querySelectorAll('.scroll-page');
+  const pagination = document.getElementById('pagination');
+
+  // Punkte erzeugen
+  pages.forEach((_, index) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    pagination.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  // Scroll-Event zur Seitenerkennung
+  scrollWrapper.addEventListener('scroll', () => {
+    const scrollLeft = scrollWrapper.scrollLeft;
+    const pageWidth = scrollWrapper.clientWidth;
+    const currentPage = Math.round(scrollLeft / pageWidth);
+
+    dots.forEach(dot => dot.classList.remove('active'));
+    if (dots[currentPage]) {
+      dots[currentPage].classList.add('active');
+    }
+  });
+</script>
+
+</body>
+</html>

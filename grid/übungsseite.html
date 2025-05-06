@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Übungsseite - Drag and Drop</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      font-family: sans-serif;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      padding: 40px;
+      height: 100vh;
+      box-sizing: border-box;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #d3d3d3;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .box:hover {
+      background-color: #f0f0f0;
+    }
+
+    .drop-area {
+      width: 150px;
+      height: 150px;
+      background-color: #e0e0e0;
+      border: 2px dashed #aaa;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .drop-area.over {
+      background-color: #cce5ff;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+      margin-top: 20px;
+    }
+
+    .button.active {
+      display: inline-block;
+    }
+
+    .result {
+      color: green;
+      font-size: 16px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Drop Areas (Lücken) oben -->
+    <div id="drop1" class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <span>Platz 1</span>
+    </div>
+    <div id="drop2" class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <span>Platz 2</span>
+    </div>
+    <div id="drop3" class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <span>Platz 3</span>
+    </div>
+
+    <!-- Drag and Drop Bausteine unten -->
+    <div id="baustein1" class="box" draggable="true" ondragstart="drag(event)">Baustein 1</div>
+    <div id="baustein2" class="box" draggable="true" ondragstart="drag(event)">Baustein 2</div>
+    <div id="baustein3" class="box" draggable="true" ondragstart="drag(event)">Baustein 3</div>
+s
+    <!-- Überprüfen und Weiter Button -->
+    <button id="checkButton" class="button" onclick="checkAnswers()">Überprüfen</button>
+    <button id="nextButton" class="button" onclick="window.location.href='inhalt3.html'">Weiter</button>
+    <div id="result" class="result">Alle Bausteine sind korrekt zugeordnet!</div>
+  </div>
+
+  <script>
+    let dropCount = 0; // Zählt, wie viele Bausteine korrekt zugewiesen wurden
+    const totalDrops = 3; // Gesamtzahl der Bausteine (Lücken)
+
+    // Drag und Drop Funktionen
+    function allowDrop(event) {
+      event.preventDefault(); // Verhindert das Standardverhalten (z.B. das Öffnen von Links)
+    }
+
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id); // Speichert die ID des Bausteins
+    }
+
+    function drop(event) {
+      event.preventDefault(); // Verhindert das Standardverhalten (z.B. das Öffnen von Links)
+      const data = event.dataTransfer.getData("text");
+      const draggedElement = document.getElementById(data);
+      const dropArea = event.target;
+
+      // Überprüfen, ob der Baustein bereits auf der Ziel-Lücke ist
+      if (dropArea.classList.contains('drop-area') && !dropArea.contains(draggedElement)) {
+        dropArea.appendChild(draggedElement); // Baustein in die Lücke einfügen
+        draggedElement.style.position = 'relative';
+        draggedElement.style.left = '0';
+        draggedElement.style.top = '0';
+        draggedElement.setAttribute('draggable', false); // Baustein nach dem Ablegen nicht mehr bewegbar
+
+        dropCount++; // Erhöht den Zähler für korrekt abgelegte Bausteine
+        checkIfAllDropped(); // Überprüft, ob alle Bausteine abgelegt wurden
+      }
+    }
+
+    // Überprüfen, ob alle Bausteine korrekt abgelegt wurden
+    function checkIfAllDropped() {
+      // Wenn alle Lücken belegt sind, wird der Überprüfen-Button aktiviert
+      if (dropCount === totalDrops) {
+        document.getElementById("checkButton").classList.add("active");
+      }
+    }
+
+    // Überprüft, ob die Bausteine korrekt zugewiesen wurden
+    function checkAnswers() {
+      let correct = true;
+
+      // Hier wird überprüft, ob der Baustein in der richtigen Lücke ist
+      const drop1 = document.getElementById("drop1").children[0]?.id;
+      const drop2 = document.getElementById("drop2").children[0]?.id;
+      const drop3 = document.getElementById("drop3").children[0]?.id;
+
+      console.log(drop1, drop2, drop3); // Überprüft die IDs der Bausteine in den Lücken
+
+      if (drop1 !== "baustein1") correct = false;
+      if (drop2 !== "baustein2") correct = false;
+      if (drop3 !== "baustein3") correct = false;
+
+      if (correct) {
+        document.getElementById("result").style.display = 'block';
+        document.getElementById("nextButton").classList.add("active");
+      } else {
+        alert("Die Bausteine sind nicht korrekt zugeordnet. Bitte versuche es noch einmal!");
+      }
+    }
+  </script>
+</body>
+</html>

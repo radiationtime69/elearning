@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Auswertung</title>
+</head>
+<body>
+  <h1>Auswertung</h1>
+  <p>Du hast dieses Modul abgeschlossen!</p>
+  <button onclick="abschliessen()">Abschließen und zurück</button>
+
+  <script>
+    function abschliessen() {
+      let fortschritt = parseInt(localStorage.getItem('fortschritt') || '0');
+      if (fortschritt < 12) {
+        localStorage.setItem('fortschritt', fortschritt + 1); // Fortschritt erhöhen
+      }
+      window.location.href = '../test3.html'; // zurück zur Übersicht
+    }
+  </script>
+</body>
+</html>
