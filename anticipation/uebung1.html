@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Text in Grid-Feldern</title>
+  <title>Übung 1 – Lückentext</title>
   <style>
     body {
       margin: 0;
@@ -19,7 +19,7 @@
       grid-template-rows: repeat(8, 1fr);
       gap: 16px;
       margin: 40px;
-      height: calc(100vh - 80px);
+      height: 100vh; /* Die Höhe des Containers auf den gesamten Viewport setzen */
     }
 
     .grid-item {
@@ -30,7 +30,6 @@
       padding: 8px;
       text-align: center;
     }
-
 
     .exercise-box {
       display: flex;
@@ -53,71 +52,95 @@
       margin-top: 15px;
       font-weight: bold;
     }
+
+    .side-grey {
+      background-color: grey;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 16.666%; /* Die Breite der grauen Flächen links und rechts */
+    }
+
+    .left-grey {
+      left: 0;
+    }
+
+    .right-grey {
+      right: 0;
+    }
+
+    .next-button {
+      margin-top: 10px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      display: none; /* Der Button ist anfangs nicht sichtbar */
+    }
+
   </style>
 </head>
 <body>
   <div class="grid-container">
 
-    <!-- Beispieltext-Blöcke -->
+    <!-- Titel -->
     <div class="grid-item text-block" style="grid-column: 3 / span 4; grid-row: 2;">
       Übung: Lückentext
     </div>
 
-    <!-- Lückentext-Übung im Grid -->
-    <div class="grid-item exercise-box" style="grid-column: 3 / span 4; grid-row: 4 / span 1;">
+    <!-- Lückentext-Übung -->
+    <div class="grid-item exercise-box" style="grid-column: 3 / span 4; grid-row: 4;">
       <p>„<input type="text" id="word1" /> ein Objekt springt, 
       <input type="text" id="word2" /> es sich zuerst nach 
       <input type="text" id="word3" />.“</p>
-    </div>
-    <!--Button Antwort Prüfen-->
-    <div class="grid-item text-block" style="grid-column: 3 / span 4; grid-row: 5;">
+
+      <!-- Antwort prüfen Button -->
       <button onclick="checkAnswers()">Antwort prüfen</button>
       <div id="feedback"></div>
+
+      <!-- Weiter Button -->
+      <a href="uebung2.html">
+        <button class="next-button" id="nextButton">Weiter zu Übung 2</button>
+      </a>
     </div>
 
-    <!-- Leere Zellen automatisch generieren -->
+    <!-- Graue Flächen links und rechts, die bis ganz runter gehen -->
+    <div class="side-grey left-grey"></div>
+    <div class="side-grey right-grey"></div>
+
+    <!-- Leere Zellen generieren -->
     <script>
-      const usedCells = [
-        [1,2,4],  // Zeile 1, Spalte 2–5
-        [2,2,3],  // Zeile 2–3, Spalte 2–4
-        [3,2,3],
-        [4,3,4],  // Übung Zeile 4–6, Spalte 3–6
-        [5,3,4],
-        [6,3,4]
-      ];
+        function checkAnswers() {
+  const word1 = document.getElementById('word1').value.trim().toLowerCase();
+  const word2 = document.getElementById('word2').value.trim().toLowerCase();
+  const word3 = document.getElementById('word3').value.trim().toLowerCase();
 
-      const totalCells = 64;
-      const container = document.querySelector('.grid-container');
+  const feedback = document.getElementById('feedback');
+  const nextButton = document.getElementById('nextButton');
 
-      function isUsedCell(index) {
-        const row = Math.floor(index / 8) + 1;
-        const col = (index % 8) + 1;
-        return usedCells.some(([r, c, span]) => r === row && col >= c && col < c + span);
-      }
+  // Variable, die festlegt, ob die Antwort richtig oder falsch ist
+  let isCorrect = (word1 === "bevor" && word2 === "duckt" && word3 === "unten");
 
-      for (let i = 0; i < totalCells; i++) {
-        if (isUsedCell(i)) continue;
-        const div = document.createElement('div');
-        div.className = 'grid-item';
-        container.appendChild(div);
-      }
+  // Feedback für den Benutzer
+  if (isCorrect) {
+    feedback.textContent = "✅ Richtig!";
+    feedback.style.color = "green";
+  } else {
+    feedback.textContent = "❌ Falsch.";
+    feedback.style.color = "red";
+  }
 
-      function checkAnswers() {
-        const word1 = document.getElementById('word1').value.trim().toLowerCase();
-        const word2 = document.getElementById('word2').value.trim().toLowerCase();
-        const word3 = document.getElementById('word3').value.trim().toLowerCase();
+  // Speichern, ob die Antwort richtig oder falsch war
+  localStorage.setItem('uebung1_richtig', isCorrect);
 
-        const isCorrect = (word1 === "bevor" && word2 === "duckt" && word3 === "unten");
+  // Weiter-Button anzeigen
+  nextButton.style.display = 'inline-block';
+}
 
-        const feedback = document.getElementById('feedback');
-        if (isCorrect) {
-          feedback.textContent = "✅ Richtig! Gute Arbeit.";
-          feedback.style.color = "green";
-        } else {
-          feedback.textContent = "❌ Nicht ganz. Tipp: Überlege, was vor dem Sprung passiert.";
-          feedback.style.color = "red";
-        }
-      }
+
+
     </script>
   </div>
 </body>
