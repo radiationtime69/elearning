@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modulübersicht</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background-color: #f0f0f0;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .layout {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .sidebar {
+      width: 280px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sidebar.visible {
+      display: flex;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #e0e0e0;
+      color: #333;
+      transition: background-color 0.2s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #d0d0d0;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      gap: 310px;
+      padding: 40px;
+      overflow-x: auto;
+      position: relative;
+      width: 100%;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .module-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .module {
+      z-index: 2;
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      background-color: #d3d3d3;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .module.completed {
+      background-color: #007bff;
+    }
+
+    .module.active {
+      background-color: #ff6f00;
+    }
+
+    .module.expanded {
+      width: 240px;
+      height: 128px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .buttons {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .buttons.visible {
+      display: flex;
+    }
+
+    .buttons button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .buttons button:first-child {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .buttons button:last-child {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .reset-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="sidebar" id="sidebar"></div>
+    <div class="container" id="moduleContainer"></div>
+    <button class="reset-button" onclick="resetProgress()">Zurücksetzen</button>
+  </div>
+
+  <svg id="connectionLine" width="10000" height="1000">
+    <path id="pathLine" stroke="black" stroke-width="4" fill="none"/>
+  </svg>
+
+  <script>
+    const moduleContainer = document.getElementById('moduleContainer');
+    const sidebar = document.getElementById('sidebar');
+    const pathLine = document.getElementById('pathLine');
+    let currentIndex = parseInt(localStorage.getItem('fortschritt') || '0');
+    const totalModules = 12;
+
+    function createModules() {
+      for (let i = 0; i < totalModules; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('module-wrapper');
+
+        const module = document.createElement('div');
+        module.classList.add('module');
+        module.dataset.index = i;
+        module.textContent = i + 1;
+
+        const buttons = document.createElement('div');
+        buttons.classList.add('buttons');
+
+        wrapper.appendChild(module);
+        wrapper.appendChild(buttons);
+        moduleContainer.appendChild(wrapper);
+      }
+    }
+
+    function scrollModuleToCenter(module) {
+      const containerRect = moduleContainer.getBoundingClientRect();
+      const moduleRect = module.getBoundingClientRect();
+
+      const scrollLeft = moduleContainer.scrollLeft;
+      const moduleCenter = moduleRect.left + moduleRect.width / 2;
+      const containerCenter = containerRect.left + containerRect.width / 2;
+
+      const offset = moduleCenter - containerCenter;
+
+      moduleContainer.scrollTo({
+        left: scrollLeft + offset,
+        behavior: 'smooth'
+      });
+    }
+
+    function setActiveModule(index) {
+      currentIndex = index;
+      localStorage.setItem('fortschritt', index);
+
+      document.querySelectorAll('.module-wrapper').forEach((wrapper, idx) => {
+        const module = wrapper.querySelector('.module');
+        const buttons = wrapper.querySelector('.buttons');
+
+        module.classList.remove('completed', 'active', 'expanded');
+        buttons.classList.remove('visible');
+        module.textContent = idx + 1;
+
+        if (idx < index) {
+          module.classList.add('completed');
+        } else if (idx === index) {
+          module.classList.add('active', 'expanded');
+          module.textContent = `Modul ${idx + 1}`;
+
+          buttons.innerHTML = '';
+
+          const startBtn = document.createElement('button');
+          startBtn.textContent = 'Starten';
+          startBtn.onclick = () => {
+            window.location.href = `modul${idx + 1}/inhalt1.html`;
+          };
+
+          const overviewBtn = document.createElement('button');
+          overviewBtn.textContent = 'Übersicht';
+          overviewBtn.onclick = () => showSidebar(idx + 1);
+
+          buttons.appendChild(startBtn);
+          buttons.appendChild(overviewBtn);
+          buttons.classList.add('visible');
+
+          scrollModuleToCenter(module);
+        }
+      });
+
+      drawPath();
+    }
+
+    function showSidebar(modulNummer) {
+      sidebar.innerHTML = '';
+      sidebar.classList.add('visible');
+
+      for (let i = 1; i <= 8; i++) {
+        const label = (i % 2 === 1) ? `Lektion ${Math.ceil(i / 2)}` : `Übung ${i / 2}`;
+        const link = document.createElement('a');
+        link.href = `modul${modulNummer}/inhalt${i}.html`;
+        link.textContent = label;
+        sidebar.appendChild(link);
+      }
+
+      const auswertung = document.createElement('a');
+      auswertung.href = `modul${modulNummer}/auswertung.html`;
+      auswertung.textContent = 'Auswertung';
+      auswertung.onclick = (e) => {
+        e.preventDefault();
+        // Fortschritt erhöhen
+        if (currentIndex < totalModules - 1) {
+          setActiveModule(currentIndex + 1);
+        }
+        // Weiterleitung trotzdem ausführen
+        setTimeout(() => {
+          window.location.href = `modul${modulNummer}/auswertung.html`;
+        }, 200);
+      };
+      sidebar.appendChild(auswertung);
+    }
+
+    function drawPath() {
+      const containerRect = moduleContainer.getBoundingClientRect();
+      const points = [];
+
+      document.querySelectorAll('.module-wrapper').forEach(wrapper => {
+        const module = wrapper.querySelector('.module');
+        const rect = module.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2 + moduleContainer.scrollLeft;
+        const centerY = containerRect.height / 2;
+        points.push([centerX, centerY]);
+      });
+
+      const pathData = points.map((p, i) => i === 0 ? `M ${p[0]} ${p[1]}` : `L ${p[0]} ${p[1]}`).join(' ');
+      pathLine.setAttribute('d', pathData);
+
+      const oldBlue = document.getElementById('blueLine');
+      if (oldBlue) oldBlue.remove();
+
+      if (currentIndex > 0) {
+        const bluePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const blueData = points.slice(0, currentIndex + 1).map((p, i) =>
+          i === 0 ? `M ${p[0]} ${p[1]}` : `L ${p[0]} ${p[1]}`
+        ).join(' ');
+        bluePath.setAttribute('d', blueData);
+        bluePath.setAttribute('stroke', '#007bff');
+        bluePath.setAttribute('stroke-width', '4');
+        bluePath.setAttribute('fill', 'none');
+        bluePath.setAttribute('id', 'blueLine');
+        pathLine.parentNode.appendChild(bluePath);
+      }
+    }
+
+    function resetProgress() {
+      localStorage.removeItem('fortschritt');
+      location.reload();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      createModules();
+      setActiveModule(currentIndex);
+    });
+
+    moduleContainer.addEventListener('scroll', drawPath);
+    window.addEventListener('resize', drawPath);
+  </script>
+</body>
+</html>
