@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lektionsübersicht – Mehrseitig</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .scroll-wrapper {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    .scroll-page {
+      min-width: 100vw;
+      height: 100vh;
+      scroll-snap-align: center;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 16px;
+      height: calc(100vh - 100px);
+    }
+
+    .grid-item {
+      display: flex;
+      align-items: flex-start;   /* Text oben ausrichten */
+      justify-content: flex-start; /* Inhalt links ausrichten */
+      padding: 8px;
+      text-align: left;           /* Text linksbündig */
+}
+
+
+    .text-block {
+      /*background-color: #d0ebff;
+      border: 1px solid #339af0;*/
+    }
+
+    .pagination {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 6px;
+      background-color: #333;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-wrapper" id="scrollWrapper">
+
+  <!-- Seite 1 -->
+  <div class="scroll-page">
+    <div class="grid-container">
+      <div class="grid-item text-block" style="grid-column: 1 / span 2; grid-row: 2;">
+        Anticipation
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 1 / span 2; grid-row: 3;">
+        Was ist Anticipation?
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 2/ span 3; grid-row: 4;">
+          Definition:
+          Anticipation – also das Ausholen oder Vorwegnehmen – ist ein zentrales Prinzip der Animation. 
+          Es bezeichnet die vorbereitende Bewegung, die einer Hauptaktion vorausgeht. Diese Bewegung macht 
+          die folgende Handlung für den Zuschauer verständlicher, natürlicher und rhythmischer.
+          <br><br>
+          Selbst einfache Handlungen wie ein Sprung oder ein Wurf wirken nur dann glaubwürdig, wenn sie zuvor vorbereitet werden – 
+          etwa durch das Beugen der Knie oder das Zurückziehen des Arms.
+          Warum ist Anticipation so wichtig?
+          In der realen Welt kündigen Menschen, Tiere und Objekte Bewegungen meist unbewusst an. Unser Gehirn ist darauf trainiert, 
+          solche Vorzeichen zu erkennen. In der Animation unterstützt Anticipation:
+          Lesbarkeit der Bewegung – der Zuschauer kann leichter folgen
+          Dramaturgie & Timing – Bewegungen erhalten Rhythmus und Spannung
+          Glaubwürdigkeit – physikalisch nachvollziehbare Abläufe
+          Stilmittel – z. B. für übertriebene Comedy-Momente in Cartoons
+          Ohne Anticipation wirken Bewegungen überraschend, steif oder "aus dem Nichts".
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 5/ span 5; grid-row: 4; background-color: grey; height: 500px;">
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 6/ span 3; grid-row: 6;">
+        Bevor ein Objekt springt, duckt es sich zuerst nach unten.
+    </div>
+    
+    
+    </div>
+  </div>
+
+  <!-- Seite 2 -->
+  <div class="scroll-page">
+    <div class="grid-container">
+      <div class="grid-item text-block" style="grid-column: 1 / span 5; grid-row: 2;">
+        Erklärung anhand eines Balls :
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 3/ span 2; grid-row: 4; background-color: grey; height: 500px;">
+      </div>
+      <div class="grid-item text-block" style="grid-column: 5/ span 2; grid-row: 4; background-color: grey; height: 500px;">
+      </div>
+
+      <div class="grid-item text-block" style="grid-column: 3 / span 6; grid-row: 6;">
+        Vergleich: Ein Ball springt ohne Anticipation (sofort hoch) vs. mit Anticipation (duckt sich vorher ab).
+      </div>
+      <!--Weiter button-->
+      <div class="grid-item text-block" style="grid-column: 8 / span 2; grid-row: 8;">
+        <button onclick="goNext()">Weiter</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- Seitenindikatoren -->
+<div class="pagination" id="pagination"></div>
+
+<script>
+  
+  function goNext() {
+  // Einfach zur nächsten Seite weiterleiten
+  window.location.href = "uebung1.html";
+}
+
+  const scrollWrapper = document.getElementById('scrollWrapper');
+  const pages = document.querySelectorAll('.scroll-page');
+  const pagination = document.getElementById('pagination');
+
+  // Punkte erzeugen
+  pages.forEach((_, index) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    pagination.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  // Scroll-Event zur Seitenerkennung
+  scrollWrapper.addEventListener('scroll', () => {
+    const scrollLeft = scrollWrapper.scrollLeft;
+    const pageWidth = scrollWrapper.clientWidth;
+    const currentPage = Math.round(scrollLeft / pageWidth);
+
+    dots.forEach(dot => dot.classList.remove('active'));
+    if (dots[currentPage]) {
+      dots[currentPage].classList.add('active');
+    }
+  });
+</script>
+
+</body>
+</html>

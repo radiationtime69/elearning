@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text in Grid-Feldern</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 16px;
+      margin: 40px;
+      height: calc(100vh - 80px);
+    }
+
+    .grid-item {
+      background-color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      text-align: center;
+    }
+
+
+    .exercise-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .exercise-box input[type="text"] {
+      width: 70px;
+      margin: 0 4px;
+    }
+
+    .exercise-box button {
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+
+    <!-- Beispieltext-Blöcke -->
+    <div class="grid-item text-block" style="grid-column: 3 / span 4; grid-row: 2;">
+      Übung: Lückentext
+    </div>
+
+    <!-- Lückentext-Übung im Grid -->
+    <div class="grid-item exercise-box" style="grid-column: 3 / span 4; grid-row: 4 / span 1;">
+      <p>„<input type="text" id="word1" /> ein Objekt springt, 
+      <input type="text" id="word2" /> es sich zuerst nach 
+      <input type="text" id="word3" />.“</p>
+    </div>
+    <!--Button Antwort Prüfen-->
+    <div class="grid-item text-block" style="grid-column: 3 / span 4; grid-row: 5;">
+      <button onclick="checkAnswers()">Antwort prüfen</button>
+      <div id="feedback"></div>
+    </div>
+
+    <!-- Leere Zellen automatisch generieren -->
+    <script>
+      const usedCells = [
+        [1,2,4],  // Zeile 1, Spalte 2–5
+        [2,2,3],  // Zeile 2–3, Spalte 2–4
+        [3,2,3],
+        [4,3,4],  // Übung Zeile 4–6, Spalte 3–6
+        [5,3,4],
+        [6,3,4]
+      ];
+
+      const totalCells = 64;
+      const container = document.querySelector('.grid-container');
+
+      function isUsedCell(index) {
+        const row = Math.floor(index / 8) + 1;
+        const col = (index % 8) + 1;
+        return usedCells.some(([r, c, span]) => r === row && col >= c && col < c + span);
+      }
+
+      for (let i = 0; i < totalCells; i++) {
+        if (isUsedCell(i)) continue;
+        const div = document.createElement('div');
+        div.className = 'grid-item';
+        container.appendChild(div);
+      }
+
+      function checkAnswers() {
+        const word1 = document.getElementById('word1').value.trim().toLowerCase();
+        const word2 = document.getElementById('word2').value.trim().toLowerCase();
+        const word3 = document.getElementById('word3').value.trim().toLowerCase();
+
+        const isCorrect = (word1 === "bevor" && word2 === "duckt" && word3 === "unten");
+
+        const feedback = document.getElementById('feedback');
+        if (isCorrect) {
+          feedback.textContent = "✅ Richtig! Gute Arbeit.";
+          feedback.style.color = "green";
+        } else {
+          feedback.textContent = "❌ Nicht ganz. Tipp: Überlege, was vor dem Sprung passiert.";
+          feedback.style.color = "red";
+        }
+      }
+    </script>
+  </div>
+</body>
+</html>
