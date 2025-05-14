@@ -4,13 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Endscreen – Ergebnisse</title>
+
+  <!-- CSS mit Variablen + Typografie-Klassen -->
+  <link rel="stylesheet" href="./css/variables.css">
+
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
+      background: var(--white-light);
       box-sizing: border-box;
-      font-family: sans-serif;
+      font-family: var(--font-primary);
     }
 
     .end-screen {
@@ -20,44 +22,21 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
-      font-size: 24px;
-      background-color: #fff;
-      border: 2px solid #ccc;
-      padding: 40px;
+      padding: var(--spacing-l);
       width: 300px;
       margin: 0 auto;
     }
 
-    .end-screen h2 {
-      margin-bottom: 20px;
-    }
 
-    .end-screen p {
-      margin: 10px 0;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background-color: #0d72c5;
-    }
   </style>
 </head>
 <body>
 
   <div class="end-screen">
-    <h2>Ergebnisse</h2>
-    <p id="correctAnswers">Richtige Antworten: 0</p>
-    <p id="wrongAnswers">Falsche Antworten: 0</p>
-    <p id="percentage">Fortschritt: 0%</p>
+    <h2 class="display">Ergebnisse</h2>
+    <p id="correctAnswers" class="body">Richtige Antworten: 0</p>
+    <p id="wrongAnswers" class="body">Falsche Antworten: 0</p>
+    <p id="percentage" class="body-large">Fortschritt: 0%</p>
     <a href="uebung1.html">
       <button>Zurück zu Übung 1</button>
     </a>
@@ -65,27 +44,20 @@
 
   <script>
     let correctAnswers = 0;
-let totalQuestions = 2;  // Wir haben nur 2 Fragen insgesamt, eine pro Übung
+    let totalQuestions = 2;
 
-// Holen der Ergebnisse aus dem localStorage
-const isCorrect1 = localStorage.getItem('uebung1_richtig') === 'true';
-const isCorrect2 = localStorage.getItem('uebung2_richtig') === 'true';
+    const isCorrect1 = localStorage.getItem('uebung1_richtig') === 'true';
+    const isCorrect2 = localStorage.getItem('uebung2_richtig') === 'true';
 
-// Zählen der richtigen Antworten
-if (isCorrect1) correctAnswers++;
-if (isCorrect2) correctAnswers++;
+    if (isCorrect1) correctAnswers++;
+    if (isCorrect2) correctAnswers++;
 
-// Berechnung des Prozentsatzes
-const percentage = (correctAnswers / totalQuestions) * 100;
+    const percentage = (correctAnswers / totalQuestions) * 100;
 
-// Ausgabe der Ergebnisse
-document.getElementById('correctAnswers').textContent = `Richtige Antworten: ${correctAnswers}`;
-document.getElementById('wrongAnswers').textContent = `Falsche Antworten: ${totalQuestions - correctAnswers}`;
-document.getElementById('percentage').textContent = `Fortschritt: ${percentage.toFixed(2)}%`;
+    document.getElementById('correctAnswers').textContent = `Richtige Antworten: ${correctAnswers}`;
+    document.getElementById('wrongAnswers').textContent = `Falsche Antworten: ${totalQuestions - correctAnswers}`;
+    document.getElementById('percentage').textContent = `Fortschritt: ${percentage.toFixed(2)}%`;
 
-
-
-    // Optional: Ergebnisse im localStorage speichern (falls gewünscht)
     localStorage.setItem('correctAnswers', correctAnswers);
     localStorage.setItem('totalQuestions', totalQuestions);
   </script>
