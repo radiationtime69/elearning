@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Textformatierungen</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+
+:root {
+    /* ===== NEUTRAL ===== */
+    --white-light: #FBF6ED;
+    --white-dark: #E9DECB;
+
+    --black-light: #282A2B;
+    --black-dark: #111112;
+  
+    /* ===== FARBEN ===== */
+    --active-light: #FFAF40;
+    --active-dark: #EF9210;
+  
+    --passive-light: #09B5B7;
+    --passive-dark: #007778;
+  
+    --accent-light: #F65599;
+    --accent-dark: #C33268;
+  
+    /* ===== Border / Radius ===== */
+    --border-thin: 4px;
+    --border-thick: 8px;
+    --radius: 4px; /*2px*/
+  
+    /* ===== Abstände (Softgrid) ===== */
+    --xxs: 4px;
+    --xs: 8px;
+    --s: 16px;
+    --m: 24px;
+    --l: 32px;
+    --xl: 40px;
+    --xxl: 64px;
+  
+    /* ===== Fonts ===== */
+    --font-primary: 'Inter', sans-serif;
+    --font-highlight-1: 'Permanent Marker', cursive;
+    --font-highlight-2: 'Schoolbell', cursive;
+}
+
+    body {
+      font-family: var(--font-primary);
+      line-height: 1.5;
+      padding: 2rem;
+       color:var(--black-light);
+    }
+
+    h1 {
+      font-family: var(--font-primary);
+      font-size: 64px;
+      margin-bottom: 1rem;
+      font-weight: 900;
+    }
+
+    h2 {
+      font-family: var(--font-primary);
+      font-size: 32px;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 1rem;
+      font-family: var(--font-highlight-2);
+    }
+     h4{
+      font-size: 20px;
+      margin-bottom: 1rem;
+      font-family: var(--font-highlight-1);
+      color:var(--black-light);
+    }
+    h5{
+      font-size: 20px;
+      margin-bottom: 1rem;
+      font-family: var(--font-highlight-1);
+      color:var(--black-light);
+    }
+    p {
+      font-size: 20px;
+      margin-bottom: 1rem;
+      font-family: var(--font-primary);
+    }
+
+    small {
+      font-size: 16px;
+      display: block;
+      margin-bottom: 1rem;
+      font-family: var(--font-primary);
+    }
+
+    mark {
+      background-color: var(--active-light);
+      color:var(--black-light);
+      padding: 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Überschrift H1</h1>
+  <h2>Überschrift H2</h2>
+  <h3>Überschrift H3 Quotes, Anmerkungen etc.</h3>
+  <h4>Überschrift H4 Buttontext</h4>
+  <h5>Überschrift H5 Header bei Inhalten </h5>
+  <p>Dies ist ein Absatz mit <mark>markiertem Text</mark>.</p>
+  <small>Kleiner Hinweistext in <code>small</code></small>
+
+</body>
+</html>
