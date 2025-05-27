@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startseite</title>
+  <link rel="stylesheet" href="../../../css/main.css" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: var(--font-primary, sans-serif);
+      background: white;
+    }
+
+    .start-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .background-text, .middle-image, .foreground-text {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+      opacity: 0;
+    }
+
+    .background-text {
+      top: 30%;
+      z-index: 1;
+      animation: moveUp 5s ease forwards 0s;
+    }
+
+    .middle-image {
+      top: 30%;
+      width: 40vw;
+      max-width: 600px;
+      z-index: 2;
+      animation: moveUp 5s ease forwards 0.5s;
+    }
+
+    .foreground-text {
+      top: 70%;
+      z-index: 3;
+      animation: moveUp 5s ease forwards 1s;
+    }
+
+    .start-button {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 4;
+    }
+
+    .start-button.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @keyframes moveUp {
+      0% {
+        transform: translate(-50%, 0);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -80px);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="start-container">
+    <div class="background-text"><h1>How to</h1></div>
+    <img src="../../assets/startseite/huhn.png" alt="Animated Illustration" class="middle-image">
+    <div class="foreground-text"><h1>Animate</h1></div>
+    <!--Button-->
+    <div class="start-button">
+    <button class="button button-accent" id="startButton" onclick="location.href='../modulübersicht/modul-test/inhalt1.html'">Let's draw</button>
+    </div>
+  </div>
+
+<script>
+  // Button-Container nach 3 Sekunden einblenden
+  setTimeout(() => {
+    document.querySelector('.start-button').classList.add('visible');
+  }, 3000);
+</script>
+
+
+</body>
+</html>
