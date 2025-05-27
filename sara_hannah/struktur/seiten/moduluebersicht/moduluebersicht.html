@@ -74,6 +74,88 @@
       transform: scale(1.15);
     }
   </style>
+  <style>
+
+#progress-unten {
+  position: fixed;
+  bottom: 40px;              /* Abstand vom unteren Rand */
+  left: 60%;                 /* horizontal zentrieren */
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 100%;              /* feste Breite statt Prozent */
+}
+
+ #progress-container {
+  position: fixed;
+  bottom: 5%;
+  left: 40%;
+  top:35px;
+  transform: translateX(-50%);
+  width: 77%;
+  height: 20px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Progressbalken im Hintergrund */
+#progress-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: var(--accent-color, #007bff);
+  transition: width 0.5s ease;
+  z-index: 1;
+}
+
+/* Fortschrittszahlen */
+#progress-text {
+  position: absolute;
+  z-index: 3;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Container für die 12 Quadrate */
+#progress-boxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  width: 80%;
+  
+}
+
+/* Einzelnes Quadrat */
+.progress-square {
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: white;
+  transition: background-color 0.3s;
+  z-index:5;
+}
+
+/* Abgeschlossen */
+.progress-square.completed {
+  background-color: #007bff;
+}
+
+/* Aktives Modul */
+.progress-square.active {
+  background-color: #ff6600;
+}
+
+</style>
 </head>
 <body>
   <h1 style="padding-left:80px;">Modulübersicht</h1>
@@ -98,8 +180,55 @@
       <div class="module-box" data-modulindex="12">Modul 12</div>
     </div>
   </div>
-  
+
+  <!-- Progressbar -->
+<div id="progress-unten">
+    <div id="progress-container">
+    <div id="progress-bar"></div>
+    </div>
+    <div id="progress-boxes"></div>
+    <span id="progress-text"></span>
+</div>
+
 <!-- JS -->
   <script src="../../js/moduluebersicht.js" defer></script>
+
+
+
+
+<script>
+  function updateProgressBar() {
+    const totalModules = 12;
+    const lastCompleted = parseInt(localStorage.getItem('lastCompletedModule')) || 0;
+
+    const percentage = Math.round((lastCompleted / totalModules) * 100);
+    document.getElementById('progress-bar').style.width = `${percentage}%`;
+    document.getElementById('progress-text').textContent = `Fortschritt: ${lastCompleted} / ${totalModules} (${percentage}%)`;
+
+    const progressBoxes = document.getElementById('progress-boxes');
+    progressBoxes.innerHTML = '';
+
+    for (let i = 1; i <= totalModules; i++) {
+      const square = document.createElement('div');
+      square.classList.add('progress-square');
+      const activeModule = lastCompleted + 1;
+
+        if (i <= lastCompleted) {
+        square.classList.add('completed');
+        }
+        if (i === activeModule) {
+        square.classList.add('active');
+        }
+
+      progressBoxes.appendChild(square);
+    }
+  }
+
+  updateProgressBar();
+</script>
+
+
+
+
 </body>
 </html>
