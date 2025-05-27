@@ -4,29 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Endscreen – Ergebnisse</title>
-  <link rel="stylesheet" href="./../../../css/variables.css" />
+  <link rel="stylesheet" href="./../../../css/variables.css">
+
   <style>
     body {
       background: var(--white-light);
-      box-sizing: border-box;
       font-family: var(--font-primary);
+      text-align: center;
+      padding: 40px;
     }
 
     .end-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      padding: var(--spacing-l);
-      width: 300px;
+      max-width: 400px;
       margin: 0 auto;
     }
 
-    #btnBack, #btnNext {
-      display: none;
+    .end-screen p {
       margin: 10px 0;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #btnNext {
+      display: none;
     }
   </style>
 </head>
@@ -45,15 +50,15 @@
   </div>
 
   <script>
+    // Ergebnisse laden
     const results = JSON.parse(localStorage.getItem('globalQuizResults') || '[]');
 
     const totalQuestions = results.length;
     const correctAnswers = results.filter(r => r === true).length;
     const wrongAnswers = totalQuestions - correctAnswers;
-    const percentage = totalQuestions > 0
-      ? Math.round((correctAnswers / totalQuestions) * 100)
-      : 0;
+    const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
 
+    // Anzeigen
     document.getElementById('correctAnswers').textContent = `Richtige Antworten: ${correctAnswers}`;
     document.getElementById('wrongAnswers').textContent = `Falsche Antworten: ${wrongAnswers}`;
     document.getElementById('percentage').textContent = `Fortschritt: ${percentage}%`;
@@ -65,15 +70,17 @@
       btnBack.style.display = 'inline-block';
       btnNext.style.display = 'none';
     } else {
-      btnBack.style.display = 'none';
+      btnBack.style.display = 'inline-block';
       btnNext.style.display = 'inline-block';
     }
 
-    // Wenn der Nutzer wiederholen möchte: Speicher löschen und weiterleiten
     btnBack.addEventListener('click', () => {
-      localStorage.removeItem('globalQuizResults');
-      window.location.href = 'inhalt1.html';
-    });
+  localStorage.clear(); // Speicher löschen
+  setTimeout(() => {
+    window.location.href = 'inhalt1.html'; // kleine Pause, dann weiterleiten
+  }, 100); // 100 ms reichen aus
+});
+
   </script>
 
 </body>
