@@ -58,7 +58,7 @@
       <div class="scroll-wrapper" id="scrollWrapper">
 
         <!-- Seite 1 -->
-        <div class="scroll-page" >
+        <div class="scroll-page" id="uebung1" >
           <div class="grid-container">
             <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
                  WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
@@ -91,7 +91,7 @@
         </div>
         
         <!-- Seite 2 -->
-        <div class="scroll-page" >
+        <div class="scroll-page" id="uebung2">
           <div class="grid-container">
             <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
                  WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
@@ -123,7 +123,7 @@
         </div>
 
          <!-- Seite 3 -->
-        <div class="scroll-page" >
+        <div class="scroll-page" id="uebung3">
           <div class="grid-container">
             <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
                  WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
@@ -147,15 +147,15 @@
 
             <!-- 1 -->
             <div class="gird-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
-                <button class="button next-button">weiter</button>
-
+               <!-- BUTTON weiter zu inhalt2 -->
+              <button class="button next-button" onclick="window.location.href='inhalt2.html'">weiter zum Inhalt</button>
             </div>
             
           </div>
         </div>
 
          <!-- Seite 4 -->
-        <div class="scroll-page" >
+        <div class="scroll-page" id="uebung4">
           <div class="grid-container">
             <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
                  WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
@@ -174,14 +174,13 @@
             </div>
 
             <div class="gird-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="false">FALSCH</button>
+                <button type="button" class="head-3 font-h1 button h100 w100" data-correct="false">FALSCH</button>
             </div>
 
             <!-- 1 -->
             <div class="gird-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
-               <!-- BUTTON weiter zu ende.html mit übersicht -->
-              <button class="button next-button" onclick="window.location.href='ende.html'">Übung beenden</button>
-
+               <!-- BUTTON weiter zu ende.html -->
+              <button class="button next-button" onclick="window.location.href='ende.html'">Übungen beenden</button>
             </div>
             
           </div>
@@ -247,12 +246,32 @@
   });
 
   //richtig/Falsch Antwort
-  const isCorrect = btn.dataset.correct === "true";
-  results[index] = isCorrect;
-  localStorage.setItem('quizResults', JSON.stringify(results));
 
 
-   
+//Funktion, die Antwort speichert
+  function saveAnswer(isCorrect) {
+    // Aktuelle Ergebnisse aus localStorage laden
+    let results = JSON.parse(localStorage.getItem('globalQuizResults') || '[]');
+    // Neue Antwort hinzufügen
+    results.push(isCorrect);
+    // Aktualisierte Liste zurück in localStorage speichern
+    localStorage.setItem('globalQuizResults', JSON.stringify(results));
+  }
+
+  // Alle Buttons mit data-correct Attribut auswählen
+  document.querySelectorAll('button[data-correct]').forEach(button => {
+    button.addEventListener('click', () => {
+      // Attribut auslesen und in Boolean umwandeln
+      const isCorrect = button.getAttribute('data-correct') === 'true';
+      // Antwort speichern
+      saveAnswer(isCorrect);
+      console.log(`Antwort gespeichert: ${isCorrect}`); // Für Debug
+    });
+  });
+
+
+
+
   </script>
 
 

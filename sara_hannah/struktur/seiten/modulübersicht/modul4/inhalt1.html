@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>8. MODUL</title>
+  <!-- CSS -->
+  <!-- <link rel="stylesheet" href="css/reset.css"> -->
+  <!--<link rel="stylesheet" href="css/variables.css"> -->
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/module.css">
+
+  <!-- Fonts -->
+  <link href="fonts/inter.css" rel="stylesheet">
+
+  <!-- JS -->
+  <script src="../../../js/cookie.js" defer></script>
+  <script src="../../../js/main.js" defer></script>
+  <script src="../../../js/quiz.js" defer></script>
+  <script src="../../../js/data.js" defer></script>
+
+</head>
+
+<body class="outer-wrapper">
+
+  <!-- NAV / ÜBERSCHRIFT -->
+ <div class="grid-container p-f">
+  <!-- MODUL -->
+  <div class="grid-item text-large font-h1" style="grid-column: 1/ span 2; grid-row: 1 / span 1; display: flex; align-items: center; gap: 24px;">
+    <span style="width: 32px; height: 32px; background-color: var(--active-light); border-radius: 4px; display: inline-block;"></span>
+    <p style="margin: 0;">Anticipation</p>
+  </div>
+
+  <!-- INHALT / ÜBUNG -->
+  <div class="grid-item text-large font-h1" style="grid-column: 7/ span 2; grid-row: 1 / span 1; display: flex; align-items: center; justify-content: flex-end;">
+    <p style="margin: 0;">INHALT</p>
+  </div> 
+</div>
+ 
+
+  <!-- Inhalte werden z. B. per JavaScript geladen -->
+      <div class="scroll-wrapper" id="scrollWrapper">
+
+        <!-- Seite 1 -->
+        <div class="scroll-page" >
+          <div class="grid-container">
+            
+            <!-- Text -->
+            <div class="grid-item" style="grid-column: 1/ span 4; grid-row: 2 / span 6;">
+              <div class="df df-jc-c h100">
+                <p class="head-1">Was ist <span class="highlight">Anticipation?</span></p>
+                <p class="text-large m-l">
+                  Anticipation – also das Ausholen oder Vorwegnehmen – ist ein zentrales Prinzip der Animation.
+                  Es bezeichnet die vorbereitende Bewegung, die einer Hauptaktion vorausgeht. Diese Bewegung macht die 
+                  folgende Handlung für den Zuschauer verständlicher, natürlicher und rhythmischer.<br><br>
+                    Selbst einfache Handlungen wie ein Sprung oder ein Wurf wirken nur dann glaubwürdig, wenn sie zuvor vorbereitet werden 
+                    – etwa durch das Beugen der Knie oder das Zurückziehen des Arms.
+                </p>
+              </div>
+            </div>
+
+            <!-- video/Bild rechts -->
+            <div class="grid-item text-block" style="grid-column: 5/ span 5; grid-row: 2 / span 6;">
+            <div class="aspect-ratio-box">
+                <video src="../../../assets/anticipation/ball-anticipation-1-balls.mp4" autoplay loop muted playsinline></video>
+            </div>
+            </div>
+
+             <!-- Bildunterschrift -->
+            <div class="grid-item" style="grid-column: 5/ span 5; grid-row: 5 / span 6;">
+              <div class="df df-jc-c h100">
+                <p class="quote">
+                  Bevor ein Objekt springt, duckt es sich zuerst nach unten.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+       
+        <!-- Seite 2 -->
+        <div class="scroll-page">
+          <div class="grid-container">
+             <!-- video/Bild rechts -->
+            <div class="grid-item text-block" style="grid-column: 2/ span 6; grid-row: 2 / span 6;">
+            <div class="aspect-ratio-box">
+                <video src="../../../assets/anticipation/ball-anticipation-2-balls.mp4" autoplay loop muted playsinline></video>
+            </div>
+            </div>
+
+             <!-- Bildunterschrift -->
+            <div class="grid-item" style="grid-column: 2 / span 6; grid-row: 6 / span 6;">
+              <div class="df df-jc-c h100">
+                <p class="text-large m-l">
+                  Vergleich: Ein Ball springt ohne Anticipation (sofort hoch, 1) vs. mit Anticipation (duckt sich vorher ab, 2).
+                  <br>
+                  Hier wird auch zur verdeutlichung mit Squash and Stretch gearbeitet. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+            <!-- ÜBUNG BUTTON -->
+            <div class="gird-item df df-ai-c" style="grid-column: 2/ span 2; grid-row: 8 / span 1;">
+               <!-- BUTTON weiter zu ende.html mit übersicht -->
+              <button class="button next-button" onclick="window.location.href='uebung1.html'">Weiter zu den Übungen</button>
+            </div>
+
+            
+          </div>
+        </div>
+
+      </div>
+
+  <!-- GRID -->
+   <!-- <div class="grid"></div> -->
+
+  <!-- Seitenindikatoren -->
+    <div class="pagination" id="pagination"></div>
+
+  
+  <!-- JAVASKRIPT -------------------------------------------->
+  <script>
+    
+    function goNext() {
+      // Einfach zur nächsten Seite weiterleiten
+      window.location.href = "inhalt2.html";
+    }
+
+    const scrollWrapper = document.getElementById('scrollWrapper');
+    const pages = document.querySelectorAll('.scroll-page');
+    const pagination = document.getElementById('pagination');
+
+    // Punkte erzeugen
+    pages.forEach((_, index) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      pagination.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    // Scroll-Event zur Seitenerkennung
+    scrollWrapper.addEventListener('scroll', () => {
+      const scrollLeft = scrollWrapper.scrollLeft;
+      const pageWidth = scrollWrapper.clientWidth;
+      const currentPage = Math.round(scrollLeft / pageWidth);
+
+      dots.forEach(dot => dot.classList.remove('active'));
+      if (dots[currentPage]) {
+        dots[currentPage].classList.add('active');
+      }
+    });
+
+    // Klick-Event für jeden Dot hinzufügen
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        const pageWidth = scrollWrapper.clientWidth;
+        scrollWrapper.scrollTo({
+          left: index * pageWidth,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+
+  <!-- <script>
+    const columns = 8;
+    const rows = 8;
+    const totalCells = columns * rows;
+
+    function createGridBase() {
+      const container = document.querySelector('.grid');
+      for (let i = 0; i < totalCells; i++) {
+        const div = document.createElement('div');
+        div.className = 'grid-item';
+        container.appendChild(div);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', createGridBase);
+  </script> -->
+
+</body>
+</html>
