@@ -1,0 +1,46 @@
+/* === INHALTSEITEN === */
+
+.scroll-wrapper {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
+    /* margin: var(--m); */
+    /* overflow: hidden; */
+}
+
+.scroll-page {
+    min-width: 100vw; 
+    scroll-snap-align: center;
+    box-sizing: border-box;
+}
+
+
+.pagination {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 6px;
+    background-color: var(--black-dark);
+    border-radius: var(--radius);
+    display: inline-block;
+    transition: background-color 0.3s ease;
+
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.dot:hover,
+.dot.active {
+    background-color: var(--active-dark);
+}
+

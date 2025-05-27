@@ -1,0 +1,221 @@
+@import url('./reset.css');
+@import url('./variables.css');
+
+/* === GRID === */
+@import url('./grid.css');
+
+/* === INHALTSEITEN === */
+@import url('./inhalt.css');
+
+/* === HOME NAV BUTTON === */
+@import url('./button-nav.css');
+
+/* ===== Browser-Reset (optional minimal) ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: normal;
+  word-break: break-word;
+  background-color: var(--white-dark);
+}
+
+body {
+  /*background-color: var(--black-dark);*/
+  color: var(--black-dark);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ===== Headings ===== */
+.head-1 {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.head-2 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.head-3 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* ===== Fließtext & Textebenen ===== */
+.text-large {
+  font-size: 24px;
+}
+.text-large-bold {
+  font-size: 24px;
+  font-weight: bold;
+}
+.text-small {
+  font-size: 16px;
+}
+.text-mini {
+    font-size: 10px;
+}
+
+/* ===== Schriftart-Auszeichnung ===== */
+.font-h1 {
+    font-family: var(--font-highlight-1);
+}
+.font-h2{
+    font-family: var(--font-highlight-2);
+}
+
+.quote{
+  font-family: var(--font-highlight-1);
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.highlight {
+  background-color: var(--active-light);
+  border-radius: 2px;
+  padding: 0 4px;
+}
+
+
+/* ===== Buttons ===== */
+.button {
+  padding: var(--s) var(--l);
+  border-radius: var(--radius);
+  border:solid var(--black-dark);
+  border-width: var(--border-thin) var(--border-thin) var(--border-thick) var(--border-thick);
+  font-weight: bold;
+  cursor: pointer;
+  font-family: var(--font-highlight-1);
+  transition: 0.2s;
+}
+
+.button:hover,
+.button:active{
+    border-width: var(--border-thin) var(--border-thin) var(--border-thin) var(--border-thin);
+}
+
+.button-active {
+  background-color: var(--active-light);
+  color: var(--black-dark);
+}
+
+.button-active:hover{
+    background: var(--active-dark);
+}
+
+.button-passive {
+  background-color: var(--passive-light);
+  color: var(--black-dark);
+}
+
+.button-accent {
+  background-color: var(--accent-light);
+  color: white;
+}
+
+.button-de {
+    background-color: var(--accent-light);
+    color: white;
+}
+
+/*Weiter buttons tauchen bei z.B Übungsseiten erst auf wenn eine antwort ausgewählt wurde*/
+
+/* Weiter-Button standardmäßig ausblenden */
+.next-button {
+  display: none;
+}
+
+/* Sichtbar, wenn aktiviert */
+.next-button.visible {
+  display: inline-block;
+}
+
+
+/* ===== Farben / Utility-Klassen ===== */
+.bg-active {
+  background-color: var(--active-light);
+}
+.bg-passive {
+  background-color: var(--passive-light);
+}
+.bg-accent {
+  background-color: var(--accent-light);
+}
+
+.text-accent {
+  color: var(--accent-dark);
+}
+.text-passive {
+  color: var(--passive-dark);
+}
+.text-active {
+  color: var(--active-dark);
+}
+
+/* ===== Border Utilities ===== */
+.border-thin {
+  border: var(--border-thin) solid var(--black-dark);
+}
+.border-thick {
+  border: var(--border-thick) solid var(--black-dark);
+}
+
+/* ===== Abstands-Klassen (Margin & Padding) ===== */
+.m-xs { margin-top: var(--xs); }
+.m-s { margin-top: var(--s); }
+.m-m { margin-top: var(--m); }
+.m-l { margin-top: var(--l); }
+
+.mx-s { margin-left: var(--s); margin-right: var(--s); }
+.mx-m { margin-left: var(--m); margin-right: var(--m); }
+
+.p-xs { padding-top: var(--xs); }
+.p-s { padding-top: var(--s); }
+.p-m { padding-top: var(--m); }
+.p-l { padding-top: var(--l); }
+
+.px-s { padding-left: var(--s); padding-right: var(--s); }
+.px-m { padding-left: var(--m); padding-right: var(--m); }
+
+/* ===== Modul-Karte Beispiel ===== */
+.modul-card {
+  border: var(--border-thin) solid var(--black-dark);
+  border-radius: var(--radius);
+  background-color: var(--white-dark);
+  padding: var(--s);
+}
+
+.modul-card > * {
+    margin: var(--m);
+}
+
+
+.img-fit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: var(--radius);
+
+}
+
+.img-fit-box {
+  /* width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%; */
+  object-fit: contain;
+}

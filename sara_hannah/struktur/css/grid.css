@@ -1,0 +1,204 @@
+@import url('./variables.css');
+@import url('./inhalt.css');
+/* ===== GRID SYSTEM (visuelles Raster) ===== */
+
+/*
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+*/
+
+/* .outer-wrapper umgibt alles im Grid */
+.outer-wrapper {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  /*width: 100%;
+  padding: var(--l);
+  color: #282A2B;
+  background-color: var(--white-light); */
+}
+
+.outer-wrapper > .scroll-wrapper{
+ padding: 0px;
+}
+
+/* Grid-Hintergrund */
+.grid {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  right: 32px;
+  bottom: 32px;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 16px;
+  pointer-events: none;
+}
+
+.grid > * {
+  border: 1px dashed #ccc;
+}
+
+/* Inhaltliches Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 16px;
+  height: 100%;
+  padding:var(--l);
+}
+
+.grid-container .grid-item {
+  /* background-color: var(--white-dark); */
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Inhaltliche Blöcke */
+.text-block {
+  padding: 8px;
+  white-space: normal;
+  word-break: break-word;
+  overflow: hidden;
+}
+
+.circle {
+  aspect-ratio: 1 / 1;
+  height: 50%;
+  border-radius: 50%;
+  background-color: var(--black-light);
+  grid-column: 1 / span 8;
+  grid-row: 1 / span 2;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  opacity: 100%;
+  transition: 0.2s;
+}
+
+a.circle:hover{
+background-color: var(--black-dark);}
+
+.df{
+  display: flex;
+  flex-direction: column;
+}
+
+.df-jc-c{
+  display: flex;
+  justify-content: center;
+}
+
+.df-ac-c{
+  display: flex;
+  align-content: center;
+}
+
+.df-ai-c{
+  display: flex;
+  align-items: center;
+}
+
+.df-m{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: auto;
+}
+
+.p-f{
+  position: fixed;
+  width: 100%;
+  height: calc(100%/ 6);
+  /* grid-template-columns: repeat(8, 1fr); */
+  grid-template-rows: repeat(1, 1fr);
+  /* z-index: ; */
+}
+
+.gap-s{
+  gap: var(--s);
+}
+
+.w50{
+  width: 50%;
+}
+
+.w75{
+  width: 75%;
+}
+
+.w100{
+  width: 100%;
+}
+
+.wauto{
+  width: auto;
+}
+
+.h50{
+  height: 50%;
+}
+
+.h100{
+  height: 100%;
+}
+
+.hauto{
+  height: auto;
+}
+
+/*
+.bc-t {
+  background: #acdaff96;
+}
+.df-c {
+  display: flex;
+  justify-content: center;
+}
+
+.hd-1 {
+  font-family: "Permanent Marker", cursive;
+  font-size: 128px;
+}
+
+.hd-5 {
+  font-family: "Permanent Marker", cursive;
+  font-size: 16px;
+}
+
+.t-l {
+  text-align: right;
+}
+.t-center {
+  text-align: center;
+}
+*/
+
+/* Marker-Stil */
+/*
+.marker {
+  display: inline;
+  background-color: #FFAF40;
+  position: relative;
+  z-index: 1;
+  color: black;
+}
+
+.marker::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.2em;
+  height: 0.6em;
+  background: rgba(255, 255, 0, 0.6);
+  z-index: -1;
+}
+*/
