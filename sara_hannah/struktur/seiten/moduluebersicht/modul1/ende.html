@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endscreen – Ergebnisse</title>
+  <link rel="stylesheet" href="./../../../css/variables.css">
+  <link rel="stylesheet" href="./../../../css/main.css">
+
+  <style>
+    body {
+      background: var(--white-light);
+      font-family: var(--font-primary);
+      text-align: center;
+      padding: 40px;
+    }
+
+    .end-screen {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .end-screen p {
+      margin: 10px 0;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #btnNext {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="end-screen">
+    <h2 class="display">Ergebnisse</h2>
+    <p id="correctAnswers" class="body">Richtige Antworten: 0</p>
+    <p id="wrongAnswers" class="body">Falsche Antworten: 0</p>
+    <p id="percentage" class="body-large">Fortschritt: 0%</p>
+
+    <button id="btnBack" class="button">Wiederhole das Modul</button>
+
+    <a href="../moduluebersicht.html" id="btnNext">
+  <button>Weiter zum nächsten Modul</button>
+   </a>
+
+
+  </div>
+
+  <script>
+    // Ergebnisse laden
+    const results = JSON.parse(localStorage.getItem('globalQuizResults') || '[]');
+
+    const totalQuestions = results.length;
+    const correctAnswers = results.filter(r => r === true).length;
+    const wrongAnswers = totalQuestions - correctAnswers;
+    const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+
+    // Anzeigen
+    document.getElementById('correctAnswers').textContent = `Richtige Antworten: ${correctAnswers}`;
+    document.getElementById('wrongAnswers').textContent = `Falsche Antworten: ${wrongAnswers}`;
+    document.getElementById('percentage').textContent = `Fortschritt: ${percentage}%`;
+
+    const btnBack = document.getElementById('btnBack');
+    const btnNext = document.getElementById('btnNext');
+
+    if (percentage < 70) {
+      btnBack.style.display = 'inline-block';
+      btnNext.style.display = 'none';
+    } else {
+      btnBack.style.display = 'inline-block';
+      btnNext.style.display = 'inline-block';
+
+      // Speichern des abgeschlossenen Moduls im localStorage
+      // Du musst hier die aktuelle Modulnummer manuell einstellen, z.B.:
+      // Beispiel: aktuelles Modul ist Modul 1
+      const currentModuleNumber = 1;  // <-- hier Modulnummer anpassen!
+
+      // Nur speichern, wenn neu oder höher als bisheriger Wert
+      const lastCompleted = parseInt(localStorage.getItem('lastCompletedModule')) || 0;
+      if (currentModuleNumber > lastCompleted) {
+        localStorage.setItem('lastCompletedModule', currentModuleNumber.toString());
+      }
+    }
+
+    btnBack.addEventListener('click', () => {
+      localStorage.removeItem('globalQuizResults'); // nur die Antworten löschen
+      setTimeout(() => {
+        window.location.href = 'inhalt1.html'; // zurück zum Modulstart
+      }, 100);
+    });
+  </script>
+
+</body>
+</html>

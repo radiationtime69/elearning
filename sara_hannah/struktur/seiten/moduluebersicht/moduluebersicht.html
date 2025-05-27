@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modulübersicht</title>
+  <style>
+    body { font-family: sans-serif; background: white; margin: 0; }
+    .scroll-wrapper {
+      overflow-x: auto;
+      padding: 40px 80px;
+      position: relative;
+    }
+    .scroll-content {
+      display: flex;
+      gap: 40px;
+      position: relative;
+      align-items: center;
+      height: 120px;
+    }
+    /* Grundlinie */
+    .base-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: grey;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    /* Aktivierte Linie */
+    .base-line.active-part {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 8px;
+      background: #007bff;
+      z-index: 2;
+      transform: translateY(-50%);
+      width: 0;
+      transition: width 1s ease;
+    }
+    .module-box {
+      flex: 0 0 160px;
+      height: 100px;
+      background: #888;
+      color: white;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      cursor: default;
+      user-select: none;
+      transition: background-color 0.3s, transform 0.3s;
+      position: relative;
+      z-index: 3;
+    }
+    .module-box.finished {
+      background: #007bff;
+      cursor: default;
+    }
+    .module-box.active {
+      background: #ff6600;
+      cursor: pointer;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.7);
+    }
+    .module-box.disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+    .module-box:hover.active {
+      transform: scale(1.15);
+    }
+  </style>
+</head>
+<body>
+  <h1 style="padding-left:80px;">Modulübersicht</h1>
+
+  <div class="scroll-wrapper" id="scrollWrapper">
+    <div class="scroll-content" id="scrollContent">
+      <div class="base-line"></div>
+      <div class="base-line active-part" id="activeLine"></div>
+
+      <!-- Module als Divs mit data-modulindex -->
+      <div class="module-box" data-modulindex="1">Modul 1</div>
+      <div class="module-box" data-modulindex="2">Modul 2</div>
+      <div class="module-box" data-modulindex="3">Modul 3</div>
+      <div class="module-box" data-modulindex="4">Modul 4</div>
+      <div class="module-box" data-modulindex="5">Modul 5</div>
+      <div class="module-box" data-modulindex="6">Modul 6</div>
+      <div class="module-box" data-modulindex="7">Modul 7</div>
+      <div class="module-box" data-modulindex="8">Modul 8</div>
+      <div class="module-box" data-modulindex="9">Modul 9</div>
+      <div class="module-box" data-modulindex="10">Modul 10</div>
+      <div class="module-box" data-modulindex="11">Modul 11</div>
+      <div class="module-box" data-modulindex="12">Modul 12</div>
+    </div>
+  </div>
+
+<script>
+  window.addEventListener('load', () => {
+    const modules = Array.from(document.querySelectorAll('.module-box'));
+    const activeLine = document.getElementById('activeLine');
+    const scrollWrapper = document.getElementById('scrollWrapper');
+    const scrollContent = document.getElementById('scrollContent');
+
+    // Lade letztes abgeschlossenes Modul aus localStorage (Zahl 1-12)
+    let lastCompleted = parseInt(localStorage.getItem('lastCompletedModule'));
+if (isNaN(lastCompleted) || lastCompleted < 0 || lastCompleted >= modules.length) {
+  lastCompleted = 0; // Standard auf Modul 1 aktiv
+}
+
+
+    // Bestimme das nächste Modul, das aktiv sein soll
+    let nextModuleIndex = lastCompleted + 1;
+
+    if(nextModuleIndex > modules.length) {
+      nextModuleIndex = modules.length; // wenn alles fertig
+    }
+
+    // Klassen setzen & Links vergeben
+    modules.forEach(mod => {
+      const idx = parseInt(mod.dataset.modulindex);
+
+      if(idx <= lastCompleted) {
+        // Fertige Module blau, nicht klickbar
+        mod.classList.add('finished');
+        mod.classList.remove('active');
+        mod.classList.remove('disabled');
+        mod.style.pointerEvents = 'none';
+      }
+      else if(idx === nextModuleIndex) {
+        // Aktives Modul orange, klickbar
+        mod.classList.add('active');
+        mod.classList.remove('finished');
+        mod.classList.remove('disabled');
+        mod.style.pointerEvents = 'auto';
+        mod.title = `Modul ${idx} starten`;
+
+        // Klick öffnet Modulordner, z.B. modul1/inhalt1.html, modul2/index.html usw.
+        mod.addEventListener('click', () => {
+  window.location.href = `modul${idx}/inhalt1.html`;
+});
+
+
+      }
+      else {
+        // Noch nicht freigegebene Module grau, nicht klickbar
+        mod.classList.add('disabled');
+        mod.classList.remove('active');
+        mod.classList.remove('finished');
+        mod.style.pointerEvents = 'none';
+      }
+    });
+
+    // Linie von Modul 1 bis aktives Modul animieren
+    const scrollContentRect = scrollContent.getBoundingClientRect();
+    const firstMod = modules[0].getBoundingClientRect();
+    const firstCenter = firstMod.left - scrollContentRect.left + firstMod.width / 2;
+
+    const activeMod = modules.find(m => m.classList.contains('active'));
+    if(!activeMod) return;
+
+    const activeRect = activeMod.getBoundingClientRect();
+    const activeCenter = activeRect.left - scrollContentRect.left + activeRect.width / 2;
+
+    activeLine.style.width = '0px';
+
+    let startTime = null;
+    const duration = 1000;
+
+    function animate(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const currentWidth = firstCenter + (activeCenter - firstCenter) * progress;
+      activeLine.style.width = currentWidth + 'px';
+
+      if(progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        // Nach Animation zum aktiven Modul scrollen
+        const wrapperRect = scrollWrapper.getBoundingClientRect();
+        const activeCenterViewport = activeRect.left + activeRect.width / 2;
+        const wrapperCenter = wrapperRect.left + wrapperRect.width / 2;
+        const scrollDiff = activeCenterViewport - wrapperCenter;
+        scrollWrapper.scrollLeft += scrollDiff;
+      }
+    }
+    requestAnimationFrame(animate);
+  });
+</script>
+</body>
+</html>
