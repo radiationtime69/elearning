@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="./../../../css/variables.css">
   <link rel="stylesheet" href="./../../../css/main.css">
 
-
   <style>
     body {
       background: var(--white-light);
@@ -56,6 +55,16 @@
     // Ergebnisse laden
     const results = JSON.parse(localStorage.getItem('globalQuizResults') || '[]');
 
+    //Debugging
+        console.log("=== DEBUG: Ergebnisse vom localStorage ===");
+        console.log("Rohdaten aus localStorage:", localStorage.getItem('globalQuizResults'));
+        console.log("Parsed results array:", results);
+        console.log("Erkannte Antworten:", results.length);
+        console.log("Richtige Antworten:", results.filter(r => r === true).length);
+        console.log("Falsche Antworten:", results.filter(r => r === false).length);
+
+
+
     const totalQuestions = results.length;
     const correctAnswers = results.filter(r => r === true).length;
     const wrongAnswers = totalQuestions - correctAnswers;
@@ -77,13 +86,13 @@
       btnNext.style.display = 'inline-block';
     }
 
+    // Nur gezielt das Quiz-Resultat löschen, nicht ALLES
     btnBack.addEventListener('click', () => {
-  localStorage.clear(); // Speicher löschen
-  setTimeout(() => {
-    window.location.href = 'inhalt1.html'; // kleine Pause, dann weiterleiten
-  }, 100); // 100 ms reichen aus
-});
-
+      localStorage.removeItem('globalQuizResults'); // gezielt nur die Antworten löschen
+      setTimeout(() => {
+        window.location.href = 'inhalt1.html'; // zurück zum Start
+      }, 100);
+    });
   </script>
 
 </body>

@@ -3,266 +3,190 @@
 <head>
   <meta charset="UTF-8" />
   <title>8. MODUL</title>
-    <!-- CSS -->
-  <!-- <link rel="stylesheet" href="css/reset.css"> -->
-  <!--<link rel="stylesheet" href="css/variables.css"> -->
   <link rel="stylesheet" href="../../../css/main.css">
   <link rel="stylesheet" href="../../../css/module.css">
-
-  <!-- Fonts -->
   <link href="fonts/inter.css" rel="stylesheet">
-
-  <!-- JS -->
   <script src="../../../js/cookie.js" defer></script>
   <script src="../../../js/main.js" defer></script>
   <script src="../../../js/quiz.js" defer></script>
   <script src="../../../js/data.js" defer></script>
-
+  <style>
+    .answer-button.selected {
+      border: 2px solid var(--highlight-color);
+      background-color: var(--highlight-light);
+    }
+  </style>
 </head>
-
 <body class="outer-wrapper">
-
-  <!-- NAV / ÜBERSCHRIFT -->
   <div class="grid-container p-f">
-      <!-- MODUL -->
-      <div class="grid-item text-large font-h1" style="grid-column: 1/ span 2; grid-row: 1 / span 1;">
-        <p>8. Staging</p>
+    <div class="grid-item text-large font-h1" style="grid-column: 1/ span 2; grid-row: 1 / span 1;"><p>8. Staging</p></div>
+    <div class="grid-item df-jc-c" style="grid-column: 4/ span 2; grid-row: 1 / span 1;">
+      <a class="circle" href="../index.html" style="display: flex; justify-content: center; align-items: center;"></a>
+    </div>
+    <div class="grid-item text-large font-h1" style="grid-column: 7/ span 2; grid-row: 1 / span 1; text-align: right;"><p>ÜBUNG</p></div>
+  </div>
+
+  <div class="scroll-wrapper" id="scrollWrapper">
+    <!-- Übung Seiten -->
+    <!-- Jede Seite gleich aufgebaut -->
+    <!-- Die Seiten 1-4 folgen demselben Schema wie unten -->
+
+    <!-- Template zum Kopieren für alle Übungen -->
+
+    <!-- Beispiel: ÜBUNG 1 -->
+    <div class="scroll-page" id="uebung1">
+      <div class="grid-container">
+        <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
+          <p class="head-1"><span class="marker">ÜBUNG 1</span></p>
+          <p class="head-3 m-l">Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.</p>
+        </div>
+        <div class="grid-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="true">RICHTIG</button>
+        </div>
+        <div class="grid-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="false">FALSCH</button>
+        </div>
+        <div class="grid-item" style="grid-column: 4/ span 2; grid-row: 7 / span 1; text-align: center;">
+          <button class="check-button button" style="display: none;">Überprüfen</button>
+        </div>
+        <div class="grid-item feedback" style="grid-column: 4/ span 2; grid-row: 7 / span 1; display: none; font-weight: bold;"></div>
+        <div class="grid-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
+          <button class="next-button button" style="display: none;">weiter</button>
+        </div>
       </div>
+    </div>
 
-      <!-- ICON-HOME-BUTTON -->
-      <div class="grid-item df-jc-c" style="grid-column: 4/ span 2; grid-row: 1 / span 1;">
-        <a class="circle" href="../index.html" style="display: flex; justify-content: center; align-items: center;">
-        </a>
+    <!-- Beispiel: ÜBUNG 2 -->
+    <div class="scroll-page" id="uebung2">
+      <div class="grid-container">
+        <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
+          <p class="head-1"><span class="marker">ÜBUNG 1</span></p>
+          <p class="head-3 m-l">Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.</p>
+        </div>
+        <div class="grid-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="true">RICHTIG</button>
+        </div>
+        <div class="grid-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="false">FALSCH</button>
+        </div>
+        <div class="grid-item" style="grid-column: 4/ span 2; grid-row: 7 / span 1; text-align: center;">
+          <button class="check-button button" style="display: none;">Überprüfen</button>
+        </div>
+        <div class="grid-item feedback" style="grid-column: 4/ span 2; grid-row: 7 / span 1; display: none; font-weight: bold;"></div>
+        <div class="grid-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
+          <button class="next-button button" style="display: none;">weiter</button>
+        </div>
       </div>
+    </div>
 
-      <!-- INHALT / ÜBUNG -->
-      <div class="grid-item text-large font-h1" style="grid-column: 7/ span 2; grid-row: 1 / span 1; text-align: right;">
-        <p>ÜBUNG</p>
-      </div> 
-  </div>  
-
-  <!-- Inhalte werden z. B. per JavaScript geladen -->
-      <div class="scroll-wrapper" id="scrollWrapper">
-
-        <!-- Seite 1 -->
-        <div class="scroll-page" id="uebung1" >
-          <div class="grid-container">
-            <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
-                 WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
-            
-            <!-- TEXT -->
-            <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
-                <p class="head-1"><span class="marker">ÜBUNG 1</span></p>
-                <p class="head-3 m-l">
-                    Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.
-                </p>
-            </div>
-
-            <!-- INPUT -->
-             <!--data-correct="true" -> Antwort richtig, false -> Falsch-->
-            <div class="gird-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="true">RICHTIG</button>
-            </div>
-
-            <div class="gird-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="false">FALSCH</button>
-            </div>
-
-            <!-- 1 -->
-            <div class="gird-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
-                <button class="button next-button">weiter</button>
-
-            </div>
-            
-          </div>
+        <!-- Beispiel: ÜBUNG 3 -->
+    <div class="scroll-page" id="uebung3">
+      <div class="grid-container">
+        <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
+          <p class="head-1"><span class="marker">ÜBUNG 1</span></p>
+          <p class="head-3 m-l">Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.</p>
         </div>
-        
-        <!-- Seite 2 -->
-        <div class="scroll-page" id="uebung2">
-          <div class="grid-container">
-            <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
-                 WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
-            
-            <!-- TEXT -->
-            <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
-                <p class="head-1"><span class="marker">ÜBUNG 2</span></p>
-                <p class="head-3 m-l">
-                    Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.
-                </p>
-            </div>
-
-            <!-- INPUT -->
-            <div class="gird-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="true">RICHTIG</button>
-            </div>
-
-            <div class="gird-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="false">FALSCH</button>
-            </div>
-
-            <!-- 1 -->
-            <div class="gird-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
-                <button class="button next-button">weiter</button>
-
-            </div>
-            
-          </div>
+        <div class="grid-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="true">RICHTIG</button>
         </div>
-
-         <!-- Seite 3 -->
-        <div class="scroll-page" id="uebung3">
-          <div class="grid-container">
-            <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
-                 WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
-            
-            <!-- TEXT -->
-            <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
-                <p class="head-1"><span class="marker">ÜBUNG 3</span></p>
-                <p class="head-3 m-l">
-                    Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.
-                </p>
-            </div>
-
-            <!-- INPUT -->
-            <div class="gird-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="true">RICHTIG</button>
-            </div>
-
-            <div class="gird-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="false">FALSCH</button>
-            </div>
-
-            <!-- 1 -->
-            <div class="gird-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
-               <!-- BUTTON weiter zu inhalt2 -->
-              <button class="button next-button" onclick="window.location.href='inhalt2.html'">weiter zum Inhalt</button>
-            </div>
-            
-          </div>
+        <div class="grid-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="false">FALSCH</button>
         </div>
-
-         <!-- Seite 4 -->
-        <div class="scroll-page" id="uebung4">
-          <div class="grid-container">
-            <!-- HIER KOENNEN NUN INHALTE EINGEFLEGT WERDEN
-                 WICHTIG: class muss gird-item haben und style grid-column und grid-row haben-->
-            
-            <!-- TEXT -->
-            <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
-                <p class="head-1"><span class="marker">ÜBUNG 4</span></p>
-                <p class="head-3 m-l">
-                    Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.
-                </p>
-            </div>
-
-            <!-- INPUT -->
-            <div class="gird-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100"data-correct="true">RICHTIG</button>
-            </div>
-
-            <div class="gird-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
-                <button type="button" class="head-3 font-h1 button h100 w100" data-correct="false">FALSCH</button>
-            </div>
-
-            <!-- 1 -->
-            <div class="gird-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
-               <!-- BUTTON weiter zu ende.html -->
-              <button class="button next-button" onclick="window.location.href='ende.html'">Übungen beenden</button>
-            </div>
-            
-          </div>
+        <div class="grid-item" style="grid-column: 4/ span 2; grid-row: 7 / span 1; text-align: center;">
+          <button class="check-button button" style="display: none;">Überprüfen</button>
         </div>
-
-            
-          </div>
+        <div class="grid-item feedback" style="grid-column: 4/ span 2; grid-row: 7 / span 1; display: none; font-weight: bold;"></div>
+        <div class="grid-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
+          <button id="nextBtn" class="button next-button" style="display: none;" onclick="window.location.href='inhalt2.html'">Weiter zum Inhalt</button>
         </div>
-
       </div>
+    </div>
 
-  <!-- GRID -->
-   <!-- <div class="grid"></div> -->
+    <!-- Beispiel: ÜBUNG 4 -->
+    <div class="scroll-page" id="uebung4">
+      <div class="grid-container">
+        <div class="grid-item" style="grid-column: 3/ span 4; grid-row: 2 / span 4;">
+          <p class="head-1"><span class="marker">ÜBUNG 1</span></p>
+          <p class="head-3 m-l">Staging bedeutet, eine Idee so darzustellen, dass sie vollständig und unmissverständlich klar wird.</p>
+        </div>
+        <div class="grid-item" style="grid-column: 3/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="true">RICHTIG</button>
+        </div>
+        <div class="grid-item" style="grid-column: 5/ span 2; grid-row: 6 / span 1;">
+          <button class="answer-button head-3 font-h1 button h100 w100" data-correct="false">FALSCH</button>
+        </div>
+        <div class="grid-item" style="grid-column: 4/ span 2; grid-row: 7 / span 1; text-align: center;">
+          <button class="check-button button" style="display: none;">Überprüfen</button>
+        </div>
+        <div class="grid-item feedback" style="grid-column: 4/ span 2; grid-row: 7 / span 1; display: none; font-weight: bold;"></div>
+        <div class="grid-item df df-ai-c" style="grid-column: 4/ span 2; grid-row: 8 / span 1;">
+           <button id="nextBtn" class="button next-button" style="display: none;" onclick="window.location.href='ende.html'">Übungen beenden</button>
+        </div>
+      </div>
+    </div>
 
-  <!-- Progressbar -->
- <div class="progress-container">
-  <div class="progress-bar" id="progressBar"></div>
-</div>
 
+    <!-- Weitere scroll-pages individuell -->
+  </div>
 
-  
-  <!-- JAVASKRIPT -------------------------------------------->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
   <script>
-  //Progressbar
-  const scrollWrapper = document.getElementById('scrollWrapper');
-  const pages = document.querySelectorAll('.scroll-page');
-  const progressBar = document.getElementById('progressBar');
+    const scrollWrapper = document.getElementById('scrollWrapper');
+    const pages = document.querySelectorAll('.scroll-page');
+    const progressBar = document.getElementById('progressBar');
 
-  scrollWrapper.addEventListener('scroll', () => {
-    const scrollLeft = scrollWrapper.scrollLeft;
-    const pageWidth = scrollWrapper.clientWidth;
-    const totalPages = pages.length;
-    const currentPage = Math.round(scrollLeft / pageWidth);
-
-    const progressPercent = ((currentPage) / totalPages) * 100;
-    progressBar.style.width = progressPercent + '%';
-  });
-
-
-    // Scroll-Event zur Seitenerkennung
     scrollWrapper.addEventListener('scroll', () => {
       const scrollLeft = scrollWrapper.scrollLeft;
       const pageWidth = scrollWrapper.clientWidth;
+      const totalPages = pages.length;
       const currentPage = Math.round(scrollLeft / pageWidth);
-
-      dots.forEach(dot => dot.classList.remove('active'));
-      if (dots[currentPage]) {
-        dots[currentPage].classList.add('active');
-      }
+      const progressPercent = (currentPage / totalPages) * 100;
+      progressBar.style.width = progressPercent + '%';
     });
 
- // weiter Buttons 
-  const nextButtons = document.querySelectorAll('.next-button');
+    document.querySelectorAll('.scroll-page').forEach((page, index) => {
+      const answerButtons = page.querySelectorAll('.answer-button');
+      const checkBtn = page.querySelector('.check-button');
+      const feedback = page.querySelector('.feedback');
+      const nextBtn = page.querySelector('.next-button');
+      let selectedButton = null;
 
-  nextButtons.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const pageWidth = scrollWrapper.clientWidth;
-      scrollWrapper.scrollTo({
-        left: (index + 1) * pageWidth,
-        behavior: 'smooth'
+      answerButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          answerButtons.forEach(b => b.classList.remove('selected'));
+          button.classList.add('selected');
+          selectedButton = button;
+          checkBtn.style.display = 'inline-block';
+          feedback.style.display = 'none';
+          nextBtn.style.display = 'none';
+        });
+      });
+
+      checkBtn.addEventListener('click', () => {
+        if (!selectedButton) return;
+
+        const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+        feedback.textContent = isCorrect ? '✅ Richtig! Gut gemacht.' : '❌ Leider Falsch!';
+        feedback.style.display = 'block';
+        checkBtn.style.display = 'none';
+        nextBtn.style.display = 'inline-block';
+
+        let results = JSON.parse(localStorage.getItem('globalQuizResults') || '[]');
+        results.push(isCorrect);
+        localStorage.setItem('globalQuizResults', JSON.stringify(results));
+      });
+
+      nextBtn.addEventListener('click', () => {
+        const pageWidth = scrollWrapper.clientWidth;
+        scrollWrapper.scrollTo({
+          left: (index + 1) * pageWidth,
+          behavior: 'smooth'
+        });
       });
     });
-  });
-
-
-  
-  //richtig/Falsch Antwort
-
-
-//Funktion, die Antwort speichert
-  function saveAnswer(isCorrect) {
-    // Aktuelle Ergebnisse aus localStorage laden
-    let results = JSON.parse(localStorage.getItem('globalQuizResults') || '[]');
-    // Neue Antwort hinzufügen
-    results.push(isCorrect);
-    // Aktualisierte Liste zurück in localStorage speichern
-    localStorage.setItem('globalQuizResults', JSON.stringify(results));
-  }
-
-  // Alle Buttons mit data-correct Attribut auswählen
-  document.querySelectorAll('button[data-correct]').forEach(button => {
-    button.addEventListener('click', () => {
-      // Attribut auslesen und in Boolean umwandeln
-      const isCorrect = button.getAttribute('data-correct') === 'true';
-      // Antwort speichern
-      saveAnswer(isCorrect);
-      console.log(`Antwort gespeichert: ${isCorrect}`); // Für Debug
-    });
-  });
-
-
-
-
   </script>
-
-
 </body>
 </html>
